@@ -1,11 +1,22 @@
-$tag_historian_pwd = Read-Host "Enter the mongo password for the tag historian found at C:\ProgramData\National Instruments\Skyline\Config\Taghistorian.json" 
-$opc_pwd = Read-Host "Enter the mongo password for OPCUA client found at C:\ProgramData\National Instruments\Skyline\Config\OpcClient.json"
-cd "C:\Program Files\National Instruments\Shared\Skyline\NoSqlDatabase\bin"
-.\mongorestore.exe --port 27018 --db nitaghistorian --username nitaghistorian --password $tag_historian_pwd --gzip C:\migration\mongo-dump\nitaghistorian
-.\mongorestore.exe --port 27018 --db niopcclient --username niopcclient --password $opc_pwd --gzip C:\migration\mongo-dump\niopcclient
-cd "C:\Program Files\National Instruments\Shared\Skyline"
+$SlConfCmdPath = "C:\Program Files\National Instruments\Shared\Skyline"
+$SlNoSqlPath = "C:\Program Files\National Instruments\Shared\Skyline\NoSqlDatabase\bin"
+$MigrationDirPath = "C:\migration"
+$OpcMigrationDirPath = "C:\migration\OpcClient"
+$TagHistoryMigrationDirPath = "C:\migration\mongo-dump\nitaghistorian"
+$OpcDbMigrationDirPath = "C:\migration\mongo-dump\niopcclient"
+$OpcCertMigrationDirPath = "C:\migration\OpcClient"
+$KeyValueDbDumpMigrationPath = "C:\migration\keyvaluedb\dump.rdb"
+$KeyValueDbPath = "C:\ProgramData\National Instruments\Skyline\KeyValueDatabase"
+$SlDataPath = "C:\ProgramData\National Instruments\Skyline\Data"
+
+$TagHistorianPwd = Read-Host "Enter the mongo password for the tag historian found at C:\ProgramData\National Instruments\Skyline\Config\Taghistorian.json" 
+$OpcPwd = Read-Host "Enter the mongo password for OPCUA client found at C:\ProgramData\National Instruments\Skyline\Config\OpcClient.json"
+
+cd $SlNoSqlPath
+.\mongorestore.exe --port 27018 --db nitaghistorian --username nitaghistorian --password $TagHistorianPwd --gzip $TagHistoryMigrationDirPath
+.\mongorestore.exe --port 27018 --db niopcclient --username niopcclient --password $OpcPwd --gzip $OpcDbMigrationDirPath
+cd $SlConfCmdPath
 .\NISystemLinkServerConfigCmd.exe stop-all-services
-Copy-Item "C:\migration\keyvaluedb\dump.rdb" -Destination "C:\ProgramData\National Instruments\Skyline\KeyValueDatabase"
-Copy-Item "C:\migration\OpcClient" -Destination "C:\ProgramData\National Instruments\Skyline\Data" -Recurse -force
-cd "C:\Program Files\National Instruments\Shared\Skyline"
+Copy-Item $KeyValueDbDumpMigrationPath -Destination $KeyValueDbPath
+Copy-Item $OpcCertMigrationDirPath -Destination $SlDataPath -Recurse -force
 .\NISystemLinkServerConfigCmd.exe start-all-services
