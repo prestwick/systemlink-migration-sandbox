@@ -26,9 +26,13 @@ cd $NoSqlPath
 
 # Replace the contents of the current Redis DB instance. This will remove previously created tags from the server. 
 cd $SlConfCmdPath
+Write-Host "Stopping all SystemLink services..."
 .\NISystemLinkServerConfigCmd.exe stop-all-services
 Copy-Item $KeyValueDbMigrationDump -Destination $KeyValueDbDir
 
 # Copy OPCUA certificates to new server
 Copy-Item $OpccertMigrationDir -Destination $SlDataDir -Recurse -force
+
+# Restart SystemLink services
+Write-Host "Starting all SystemLink services..."
 .\NISystemLinkServerConfigCmd.exe start-all-services

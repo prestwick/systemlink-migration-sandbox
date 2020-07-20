@@ -32,6 +32,7 @@ cd $NoSqlPath
 
 # Stop SystemLink services to dump Redis DB contents to disk and dump to migration directory
 cd $SlConfCmdPath
+Write-Host "Stopping all SystemLink services..."
 .\NISystemLinkServerConfigCmd.exe stop-all-services
 New-Item -ItemType directory -Path $keyValueDbMigrationDir
 Copy-Item $KeyValueDbDumpSource -Destination $keyValueDbMigrationDir -Verbose
@@ -39,5 +40,6 @@ Copy-Item $KeyValueDbDumpSource -Destination $keyValueDbMigrationDir -Verbose
 # Copy OPCUA certificats to migration directory
 Copy-Item $OpcCertSourceDir -Destination $OpccertMigrationDir -Recurse -Verbose
 
-# Restart SystemLink services. 
+# Restart SystemLink services
+Write-Host "Starting all SystemLink services..."
 .\NISystemLinkServerConfigCmd.exe start-all-services
