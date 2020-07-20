@@ -4,8 +4,8 @@
 # This script will migrate all tags, not just those created by OPCUA session monitors. 
 
 # Set variables for various paths used during migration
-$SlConfCmdPath = "C:\Program Files\National Instruments\Shared\Skyline"
-$NoSqlPath = "C:\Program Files\National Instruments\Shared\Skyline\NoSqlDatabase\bin"
+$SlConfCmdDir = "C:\Program Files\National Instruments\Shared\Skyline"
+$NoSqlDir = "C:\Program Files\National Instruments\Shared\Skyline\NoSqlDatabase\bin"
 $MigrationDir = "C:\migration"
 $OpcMigrationDir = "C:\migration\OpcClient"
 $TagHistorianMigrationDir = "C:\migration\mongo-dump\nitaghistorian"
@@ -20,12 +20,12 @@ $TagHistorianPwd = Read-Host "Enter the mongo password for the tag historian fou
 $OpcPwd = Read-Host "Enter the mongo password for OPCUA client found at C:\ProgramData\National Instruments\Skyline\Config\OpcClient.json"
 
 # Import MongoDB dump files 
-cd $NoSqlPath
+cd $NoSqlDir
 .\mongorestore.exe --port 27018 --db nitaghistorian --username nitaghistorian --password $TagHistorianPwd --gzip $TagHistorianMigrationDir
 .\mongorestore.exe --port 27018 --db niopcclient --username niopcclient --password $OpcPwd --gzip $OpcDbMigrationDir
 
 # Replace the contents of the current Redis DB instance. This will remove previously created tags from the server. 
-cd $SlConfCmdPath
+cd $SlConfCmdDir
 Write-Host "Stopping all SystemLink services..."
 .\NISystemLinkServerConfigCmd.exe stop-all-services
 Copy-Item $KeyValueDbMigrationDump -Destination $KeyValueDbDir

@@ -4,10 +4,11 @@
 # This script will migrate all tags, not just those created by OPCUA session monitors. 
 
 # Set variables for various paths used during migration
-$SlConfCmdPath = "C:\Program Files\National Instruments\Shared\Skyline"
-$NoSqlPath = "C:\Program Files\National Instruments\Shared\Skyline\NoSqlDatabase\bin"
+$SlConfCmdDir = "C:\Program Files\National Instruments\Shared\Skyline"
+$NoSqlDir = "C:\Program Files\National Instruments\Shared\Skyline\NoSqlDatabase\bin"
 $MigrationDir = "C:\migration"
 $OpcMigrationDir = "C:\migration\OpcClient"
+$NoSqlDumpDir = "C:\migration\mongo-dump"
 $TagHistorianMigrationDir = "C:\migration\mongo-dump\nitaghistorian"
 $OpcCertSourceDir  = "C:\ProgramData\National Instruments\Skyline\Data\OpcClient"
 $OpcDbMigrationDir = "C:\migration\mongo-dump\niopcclient"
@@ -26,12 +27,12 @@ $OpcPwd = Read-Host "Enter the mongo password for OPCUA client found at C:\Progr
 New-Item -ItemType directory -Path $MigrationDir
 
 # Produce MongoDB dump files 
-cd $NoSqlPath
-.\mongodump.exe --port 27018 --db nitaghistorian --username nitaghistorian --password $TagHistorianPwd --out C:\migration\mongo-dump --gzip
+cd $NoSqlDir
+.\mongodump.exe --port 27018 --db nitaghistorian --username nitaghistorian --password $TagHistorianPwd --out $NoSqlDumpDir --gzip
 .\mongodump.exe --port 27018 --db niopcclient --username niopcclient --password $OpcPwd --out C:\migration\mongo-dump --gzip
 
 # Stop SystemLink services to dump Redis DB contents to disk and dump to migration directory
-cd $SlConfCmdPath
+cd $SlConfCmdDir
 Write-Host "Stopping all SystemLink services..."
 .\NISystemLinkServerConfigCmd.exe stop-all-services
 New-Item -ItemType directory -Path $keyValueDbMigrationDir
