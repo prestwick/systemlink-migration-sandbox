@@ -1,5 +1,5 @@
 # systemlink-migration-sandbox
-A place for example PowerShell scripts used to migrate data and setting between SystemLink servers. 
+A place for example PowerShell scripts used to migrate data and setting between SystemLink servers. We encourage migration to servers with a fresh install of SystemLink that contains no production data. 
 
 
 ## Prerequisites 
