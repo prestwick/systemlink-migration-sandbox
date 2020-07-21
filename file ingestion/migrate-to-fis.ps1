@@ -21,7 +21,3 @@ $DumpFile = Join-Path $NoSqlDumpDir $Config."Mongo.Database"
 
 # Copy ingested files to new server
 Copy-Item $FisDataMigrationDir -Destination $SlDataDir -Recurse -force
-
-# Restart SystemLink services
-Write-Host "Starting all SystemLink services..."
-. $SlConfCmd start-all-services
