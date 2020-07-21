@@ -6,7 +6,7 @@
 $MigrationDir = "C:\migration"
 $NoSqlDumpDir = Join-Path $MigrationDir mongo-dump
 # C:\ProgramData\National Instruments\Skyline\Data\FileIngestion
-$FisDataSourceDir = Join-Path $env:ProgramData "National Instruments" Skyline FileIngestion
+$FisDataSourceDir = Join-Path $env:ProgramData "National Instruments" Skyline Data FileIngestion
 $FisDataMigrationDir = Join-Path $MigrationDir FileIngestion
 $MongoDump = Join-Path $env:ProgramFiles "National Instruments" Shared Skyline NoSqlDatabase bin mongodump.exe
 # $SlConfCmd = Join-Path $env:ProgramFiles "National Instruments" Shared Skyline NISystemLinkServerConfigCmd.exe
