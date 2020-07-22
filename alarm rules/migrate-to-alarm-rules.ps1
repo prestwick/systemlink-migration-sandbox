@@ -1,4 +1,4 @@
-# migrate-to-alarms.ps1
+# migrate-to-alarm-rules.ps1
 
 # This example will migrate all tag alarm rules generated from running migrate-from-alarms.ps1 to another SystemLink Server
 # This script does not migrate tags associated with alarms, or  the alarm instances generated from these rule. 
