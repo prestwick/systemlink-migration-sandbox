@@ -1,6 +1,6 @@
 # migrate-from-fis.ps1
 
-# This example will generate a migration directory containing all file ingested by a SystemLink Server.  
+# This example will migrate all ingested file data to a new SystemLink server
 
 # Set variables for various paths used during migration
 $MigrationDir = "C:\migration"
