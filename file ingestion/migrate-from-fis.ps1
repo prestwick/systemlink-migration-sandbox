@@ -18,5 +18,5 @@ $Config = (Get-Content $ConfigFile | ConvertFrom-Json).$Service
 . $MongoDump --port $Config."Mongo.Port" --db $Config."Mongo.Database" --username $Config."Mongo.User" --password $Config."Mongo.Password" --out $NoSqlDumpDir --gzip
 
 # Copy ingested file to the migration directory
-New-Item -ItemType directory -Path $FisDataMigrationDir
-Copy-Item $FisDataSourceDir -Destination $FisDataMigrationDir -Recurse -Verbose
+# New-Item -ItemType directory -Path $FisDataMigrationDir
+Copy-Item $FisDataSourceDir -Destination $MigrationDir -Recurse -Verbose
