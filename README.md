@@ -2,9 +2,17 @@
 A place for example PowerShell scripts used to migrate data and setting between SystemLink servers. We encourage migration to servers with a fresh install of SystemLink that contains no production data. 
 
 ## Prerequisites 
+### SystemLink
 - These scripts assume migration from a SystemLink 2020R1 (20.0) to another SystemLink 2020R1 server
 - These scripts assume a single-box SystemLink installation. 
 - These scripts are designed to un on the same machines as the SystemLink installation. They do not support remote migration. 
+
+### Migrating  with Python
+- These scripts require >=Python3 to run. Installers can be found at [python.org](https://www.python.org/downloads/)
+- The documentation in this repo assumes Python has been added to your PATH variable. 
+- Depending on the setup of your environment you may invoke python with `python`, `python3`, or `py`. Documentation in this repo use `py`. 
+
+### Migrating with PowerShell
 - These scripts require PowerShell 7 to run. Installers can be found in the [Powershell Github repo](https://github.com/PowerShell/PowerShell/releases). 
 - PowerShell must be run as an administrator. 
 - The Powershell `Set-ExecutionPolicy` cmdlet may have to be modified to run Powershell scripts. See [SetExecution-Policy](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.security/set-executionpolicy?view=powershell-7]) for more details on modifying this setting. 
