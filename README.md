@@ -21,3 +21,13 @@ This example will migrate all tags, tag histories, OPCUA sessions and certificat
 [test monitor data](https://github.com/prestwick/systemlink-migration-sandbox/tree/master/test%20monitor%20data)
 
 This example will migrate test results and test step data. 
+
+# Migrate Tag Alarm Rule
+[alarm rules](https://github.com/prestwick/systemlink-migration-sandbox/tree/master/alarm%20rules)
+
+This example will migrate tag alarms rules. This includes the default tag alarm rules created when SystemLink is installed. 
+
+# Migrate Ingested File 
+[file ingestion](https://github.com/prestwick/systemlink-migration-sandbox/tree/master/file%20ingestion)
+
+This example will migrate files uploaded via the File Ingestion service to a new a SystemLink server 
