@@ -1,6 +1,6 @@
 # Migrate Tag Alarm Rule
 This example will migrate tag alarms rules. This includes the default tag alarm rules created when SystemLink is installed. 
-# Note this may lead to duplicate rules in the new server
+Note this may lead to duplicate rules in the new server
 
 ## Migrating From an Existing Server
 1. Read and understand the [prerequisites](https://github.com/prestwick/systemlink-migration-sandbox/blob/master/README.md#Prerequisites) for this script. 
