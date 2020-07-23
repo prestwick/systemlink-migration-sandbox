@@ -12,7 +12,7 @@ program_file_dir = os.environ.get("ProgramW6432")
 program_data_dir = os.environ.get("ProgramData")
 # opc_migration_dir= os.path.join(migration_dir, "OpcClient")
 sl_data_dir = os.path.join(program_data_dir, "National Instruments", "Skyline", "Data")
-# opc_cert_source_dir = os.path.join(program_data_dir, "National Instruments", "Skyline", "Data", "OpcClient")
+opc_cert_source_dir = os.path.join(program_data_dir, "National Instruments", "Skyline", "Data", "OpcClient")
 opc_cert_migration_dir = os.path.join(migration_dir, "OpcClient")
 keyvaluedb_migration_dir = os.path.join(migration_dir, "keyvaluedb")
 keyvaluedb_dump_dir = os.path.join(program_data_dir, "National Instruments", "Skyline", "KeyValueDatabase")
@@ -43,6 +43,7 @@ subprocess.run(slconf_cmd_stop)
 shutil.copy(keyvaluedb_dump, keyvaluedb_dump_dir)
 
 # Copy OPCUA certificats to data directory
+shutil.rmtree(opc_cert_source_dir)
 shutil.copytree(opc_cert_migration_dir, sl_data_dir)   
 
 # Restart SystemLink services
