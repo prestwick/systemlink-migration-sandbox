@@ -37,8 +37,22 @@ for service in services:
 print("Stopping all SystemLink services")
 subprocess.run(slconf_cmd_stop)
 
-# Copy OPCUA certificats to migration directory
+# Stop SystemLink services to dump Redis DB contents to disk and dump to migration directory
+os.mkdir(keyvaluedb_migration_dir)
 shutil.copy(keyvaluedb_dump_source, keyvaluedb_migration_dir)
+
+# Copy OPCUA certificats to migration directory
+os.mkdir(opc_cert_migration_dir)
+# opc_cert_files = os.listdir(opc_cert_source_dir)
+shutil.copytree(opc_cert_source_dir, opc_cert_migration_dir)   
+
+
+
+# migration_files = os.listdir(fis_data_source_dir)
+# for file_name in migration_files:
+#     full_file_path = os.path.join(fis_data_source_dir, file_name)
+#     if os.path.isfile(full_file_path):
+#         shutil.copy(full_file_path, fis_data_migration_dir)
 
 # Restart SystemLink services
 print ("Starting all SystemLink services...")
