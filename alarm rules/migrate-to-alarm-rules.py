@@ -11,6 +11,9 @@ no_sql_dump_dir = os.path.join(migration_directory, "mongo-dump")
 program_file_dir = os.environ.get("ProgramW6432")
 program_data_dir = os.environ.get("ProgramData")
 mongo_restore = os.path.join(program_file_dir, "National Instruments", "Shared", "Skyline", "NoSqlDatabase", "bin", "mongorestore.exe")
+#$SlConfCmd = Join-Path $env:ProgramFiles "National Instruments" Shared Skyline NISystemLinkServerConfigCmd.exe
+slconf_cmd = os.path.join(program_file_dir, "National Instruments", "Shared", "Skyline", "NISystemLinkServerConfigCmd.exe")
+
 
 # Get data from service's json config file 
 service = "TagRuleEngine"
@@ -22,3 +25,9 @@ with open(config_file, encoding='utf-8-sig') as json_file:
 mongo_dump_file = os.path.join(no_sql_dump_dir, config[service]['Mongo.Database'])
 mongo_restore_cmd = mongo_restore + " --port " + str(config[service]['Mongo.Port']) + " --db " + config[service]['Mongo.Database'] + " --username " + config[service]['Mongo.User'] + " --password " + config[service]['Mongo.Password'] + " --gzip " + mongo_dump_file
 subprocess.run(mongo_restore_cmd)
+
+# Restart service manager to access alarm rule details
+slconf_cmd_stop = slconf_cmd + "stop-all-services" + "wait"
+slconf_cmd_start = slconf_cmd + "start-all-services"
+subprocess.run(slconf_cmd_stop)
+subprocess.run(slconf_cmd_start)
