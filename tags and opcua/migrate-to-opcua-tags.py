@@ -29,8 +29,9 @@ for service in services:
     with open(config_file, encoding='utf-8-sig') as json_file:
         config = json.load(json_file)
 
-    # Dump mongo database to migration directory
-    mongo_restore_cmd = mongo_restore + " --port " + str(config[service]['Mongo.Port']) + " --db " + config[service]['Mongo.Database'] + " --username " + config[service]['Mongo.User'] + " --password " + config[service]['Mongo.Password'] + " --out " + no_sql_dump_dir + " --gzip"
+    # Restore mongo database from contents of migration directory
+    mongo_dump_file = os.path.join(no_sql_dump_dir, config[service]['Mongo.Database'])
+    mongo_restore_cmd = mongo_restore + " --port " + str(config[service]['Mongo.Port']) + " --db " + config[service]['Mongo.Database'] + " --username " + config[service]['Mongo.User'] + " --password " + config[service]['Mongo.Password'] + " --gzip " + mongo_dump_file
     subprocess.run(mongo_restore_cmd)
 
 # Stop SystemLink services to dump Redis DB contents to disk and dump to migration directory
