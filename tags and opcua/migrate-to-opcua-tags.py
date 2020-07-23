@@ -39,7 +39,7 @@ print("Stopping all SystemLink services")
 subprocess.run(slconf_cmd_stop)
 
 # Replace the contents of the current Redis DB instance. This will remove previously created tags from the server. 
-shutil.copy(keyvaluedb_migration_dir, keyvaluedb_dump_source)
+shutil.copy(keyvaluedb_migration_dir, keyvaluedb_dump_dir)
 
 # Copy OPCUA certificats to data directory
 shutil.copytree(opc_cert_migration_dir, sl_data_dir)   
