@@ -42,7 +42,7 @@ os.mkdir(keyvaluedb_migration_dir)
 shutil.copy(keyvaluedb_dump_source, keyvaluedb_migration_dir)
 
 # Copy OPCUA certificats to migration directory
-os.mkdir(opc_cert_migration_dir)
+# os.mkdir(opc_cert_migration_dir)
 # opc_cert_files = os.listdir(opc_cert_source_dir)
 shutil.copytree(opc_cert_source_dir, opc_cert_migration_dir)   
 
