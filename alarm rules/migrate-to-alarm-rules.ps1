@@ -14,3 +14,7 @@ $ConfigFile = Join-Path $env:ProgramData "National Instruments" Skyline Config "
 $Config = (Get-Content $ConfigFile | ConvertFrom-Json).$Service
 $DumpFile = Join-Path $NoSqlDumpDir $Config."Mongo.Database"
 . $MongoRestore --port $Config."Mongo.Port" --db $Config."Mongo.Database" --username $Config."Mongo.User" --password $Config."Mongo.Password" --gzip $DumpFile
+
+#Restart SystemLink services
+. $SlConfCmd stop-all services wait
+. $SlConfCmd start-all-services
