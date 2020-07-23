@@ -28,7 +28,7 @@ mongo_restore_cmd = mongo_restore + " --port " + str(config[service]['Mongo.Port
 subprocess.run(mongo_restore_cmd)
 
 # Restart service manager to access alarm rule details
-slconf_cmd_stop = slconf_cmd + "stop-all-services" + "wait"
-slconf_cmd_start = slconf_cmd + "start-all-services"
+slconf_cmd_stop = slconf_cmd + " stop-all-services" + " wait"
+slconf_cmd_start = slconf_cmd + " start-all-services"
 subprocess.run(slconf_cmd_stop)
 subprocess.run(slconf_cmd_start)
