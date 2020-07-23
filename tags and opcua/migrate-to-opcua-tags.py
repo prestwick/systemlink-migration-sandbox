@@ -16,6 +16,7 @@ sl_data_dir = os.path.join(program_data_dir, "National Instruments", "Skyline", 
 opc_cert_migration_dir = os.path.join(migration_dir, "OpcClient")
 keyvaluedb_migration_dir = os.path.join(migration_dir, "keyvaluedb")
 keyvaluedb_dump_dir = os.path.join(program_data_dir, "National Instruments", "Skyline", "KeyValueDatabase")
+keyvaluedb_dump = os.path.join(keyvaluedb_migration_dir, "dump.rdb")
 mongo_restore = os.path.join(program_file_dir, "National Instruments", "Shared", "Skyline", "NoSqlDatabase", "bin", "mongorestore.exe")
 slconf_cmd = os.path.join(program_file_dir, "National Instruments", "Shared", "Skyline", "NISystemLinkServerConfigCmd.exe")
 slconf_cmd_stop = slconf_cmd + " stop-all-services" + " wait"
@@ -39,7 +40,7 @@ print("Stopping all SystemLink services")
 subprocess.run(slconf_cmd_stop)
 
 # Replace the contents of the current Redis DB instance. This will remove previously created tags from the server. 
-shutil.copy(keyvaluedb_migration_dir, keyvaluedb_dump_dir)
+shutil.copy(keyvaluedb_dump, keyvaluedb_dump_dir)
 
 # Copy OPCUA certificats to data directory
 shutil.copytree(opc_cert_migration_dir, sl_data_dir)   
