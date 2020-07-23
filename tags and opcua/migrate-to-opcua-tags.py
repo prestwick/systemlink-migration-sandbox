@@ -44,7 +44,7 @@ shutil.copy(keyvaluedb_dump, keyvaluedb_dump_dir)
 
 # Copy OPCUA certificats to data directory
 shutil.rmtree(opc_cert_source_dir)
-shutil.copytree(opc_cert_migration_dir, sl_data_dir)   
+shutil.copytree(opc_cert_migration_dir, opc_cert_source_dir)   
 
 # Restart SystemLink services
 print ("Starting all SystemLink services...")
