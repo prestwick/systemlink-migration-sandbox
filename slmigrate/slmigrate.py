@@ -12,6 +12,10 @@ no_sql_dump_dir = os.path.join(migration_dir, "mongo-dump")
 # fis_data_migration_dir = os.path.join(migration_dir, "FileIngestion")
 # mongo_dump = os.path.join(program_file_dir, "National Instruments", "Shared", "Skyline", "NoSqlDatabase", "bin", "mongodump.exe")
 
+#Service name strings
+tagservice = "TagIngestion"
+opcservice = "OpcClient"
+
 
 
 # Setup available command line arguments
@@ -25,30 +29,17 @@ def add_numbers(num1, num2):
     sum = num1 + num2
     return sum
 
-def foo():
-    print("foo called")
+def migrate_tags():
+    print("migrate_tags called")
 
-def bar():
-    print("bar called")
-
-def bam():
-    print("bam called")
-
-def tag():
-    print("tag called")
+def migrate_opc():
+    print("migrate_opc called")
 
 
 # Main
-# def main():
-#     parse_arguments(sys.argv[1:])
-# parser = parse_arguments(sys.argv[1:])
-# arguments = parser.parse_known_args()
-# print (arguments[1])
-# for argument in arguments:
-#     print(argument)
 if __name__ == "__main__":
     arguments = parse_arguments(sys.argv[1:]).parse_args()
     if arguments.tag:
-        foo()
+        migrate_tags()
     if arguments.opc:
-        bar()
+        migrate_opc()
