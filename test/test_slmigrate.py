@@ -1,7 +1,9 @@
 import pytest
 # from slmigrate import slmigrate
 # from slmigrate import systemlinkmigrate
-from slmigrate import systemlinkmigrate
+# from slmigrate import systemlinkmigrate
+
+import systemlinkmigrate
 
 def test_main():
     pass

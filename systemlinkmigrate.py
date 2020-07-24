@@ -7,13 +7,16 @@ import os, json, shutil, subprocess, argparse, sys
 # import migrate
 # from slmigrate.migrate import restore
 
-# his will makes test work, but the script will fail. 
+# This will makes test work, but the script will fail. 
 # from slmigrate.migrate import restore
 # from slmigrate.migrate import capture
 
 # This will make the app work but test will fail. 
-from migrate import restore
-from migrate import capture
+# from migrate import restore
+# from migrate import capture
+
+from slmigrate.migrate import capture
+from slmigrate.migrate import restore
 
 # Global Constants
 migration_dir = os.path.join(os.path.abspath(os.sep), "migration")
