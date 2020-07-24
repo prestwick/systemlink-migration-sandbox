@@ -1,7 +1,7 @@
 # Generic migration utility for migrating various data and settings between SystemLink servers. 
 # Not all services will be supported. Addtional services will be supported over time. 
 
-import os, json, shutil, subprocess, argparse
+import os, json, shutil, subprocess, argparse, sys
 
 # Global Constants
 migration_dir = os.path.join(os.path.abspath(os.sep), "migration")
@@ -15,15 +15,25 @@ no_sql_dump_dir = os.path.join(migration_dir, "mongo-dump")
 
 
 # Setup available command line arguments
-def setup_argparse():
+def parse_arguments(args):
     parser = argparse.ArgumentParser()
     parser.add_argument ("--tag", "--tags", "--tagingestion", "--taghistory", help="Migrate tags and tag histories", action="store_true")
     parser.add_argument ("--opc", "--opcua", "--opcuaclient", help="Migrate OPCUA sessions and certificates", action="store_true")
-    parser.parse_args()
-    args = parser.parse_args()
-    print(args)
-    return str(args)
+    return  parser 
+
+def add_numbers(num1, num2):
+    sum = num1 + num2
+    return sum
 
 
 # Main
-setup_argparse()
+# def main():
+#     parse_arguments(sys.argv[1:])
+# parser = parse_arguments(sys.argv[1:])
+# arguments = parser.parse_known_args()
+# print (arguments[1])
+# for argument in arguments:
+#     print(argument)
+if __name__ == "__main__":
+    parser = parse_arguments(sys.argv[1:])
+    print(parser)
