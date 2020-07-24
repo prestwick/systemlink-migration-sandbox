@@ -17,13 +17,25 @@ no_sql_dump_dir = os.path.join(migration_dir, "mongo-dump")
 # Setup available command line arguments
 def parse_arguments(args):
     parser = argparse.ArgumentParser()
-    parser.add_argument ("--tag", "--tags", "--tagingestion", "--taghistory", help="Migrate tags and tag histories", action="store_true")
+    parser.add_argument ("--tag", "--tags", "--tagingestion", "--taghistory", help="Migrate tags and tag histories", action="store_true", )
     parser.add_argument ("--opc", "--opcua", "--opcuaclient", help="Migrate OPCUA sessions and certificates", action="store_true")
     return  parser 
 
 def add_numbers(num1, num2):
     sum = num1 + num2
     return sum
+
+def foo():
+    print("foo called")
+
+def bar():
+    print("bar called")
+
+def bam():
+    print("bam called")
+
+def tag():
+    print("tag called")
 
 
 # Main
@@ -35,5 +47,8 @@ def add_numbers(num1, num2):
 # for argument in arguments:
 #     print(argument)
 if __name__ == "__main__":
-    parser = parse_arguments(sys.argv[1:])
-    print(parser)
+    arguments = parse_arguments(sys.argv[1:]).parse_args()
+    if arguments.tag:
+        foo()
+    if arguments.opc:
+        bar()
