@@ -15,21 +15,9 @@ import os, json, shutil, subprocess, argparse, sys
 # from migrate import restore
 # from migrate import capture
 
-from slmigrate.migrate import capture
-from slmigrate.migrate import restore
-
-# Global Constants
-migration_dir = os.path.join(os.path.abspath(os.sep), "migration")
-no_sql_dump_dir = os.path.join(migration_dir, "mongo-dump")
-# program_file_dir = os.environ.get("ProgramW6432")
-# program_data_dir = os.environ.get("ProgramData")
-# fis_data_source_dir = os.path.join(program_data_dir, "National Instruments", "Skyline", "Data", "FileIngestion")
-# fis_data_migration_dir = os.path.join(migration_dir, "FileIngestion")
-# mongo_dump = os.path.join(program_file_dir, "National Instruments", "Shared", "Skyline", "NoSqlDatabase", "bin", "mongodump.exe")
-
-#Service name strings
-tagservice = "TagIngestion"
-opcservice = "OpcClient"
+from slmigrate import capture
+from slmigrate import restore
+from slmigrate import constants
 
 # Setup available command line arguments
 def parse_arguments(args):
@@ -53,14 +41,14 @@ if __name__ == "__main__":
         print("You cannot use --capture and --restore simultaneously. ")
     if arguments.tag:
         if arguments.capture:
-            capture.capture_migration(tagservice)
+            capture.capture_migration(constants.opcservice)
         if arguments.restore:
-            restore.restore_migration(tagservice)
+            restore.restore_migration(constants.tagservice)
     if arguments.opc:
         if arguments.capture:
-            capture.capture_migration(opcservice)
+            capture.capture_migration(constants.opcservice)
         if arguments.restore:
-            restore.restore_migration(opcservice)
+            restore.restore_migration(constants.opcservice)
 
 
         
