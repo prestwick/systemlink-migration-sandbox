@@ -13,6 +13,6 @@ def test_add_numbers():
     assert sum == 3
 
 def test_parse_arguments():
-    parser = systemlinkmigrate.parse_arguments(["--tags", "--tag", "--taghistory", "--tagingestion", "--opc", "--opcua", "--opcuaclient"])
+    parser = systemlinkmigrate.parse_arguments(["--tags", "--tag", "--taghistory", "--tagingestion", "--opc", "--opcua", "--opcuaclient", "--fis", "--files", "--file"])
     assert parser.parse_known_args()
 

@@ -1,5 +1,5 @@
-files = slmigrate test *.py
-test_files = *
+pyfiles = slmigrate test *.py
+test_files = slmigrate
 
 test:
 	pytest -s -v test/test_$(test_files).py --doctest-modules --cov slmigrate --cov-config=.coveragerc --cov-report term-missing
