@@ -20,9 +20,9 @@ def capture_dir_data(service):
     shutil.copytree(service.source_dir, service.migration_dir)  
 
 def capture_singlefile(service):
-    check_migration_dir(service['singlefile_migration_dir'])
+    check_migration_dir(service.singlefile_migration_dir)
     os.mkdir(service.singlefile_migration_dir)
-    shutil.copy(service.singlefile_to_migrate, service.singlefile_migration.dir)
+    shutil.copy(service.singlefile_to_migrate, service.singlefile_migration_dir)
 
 def capture_migration(service):
     print(service.name + " capture migration called")
