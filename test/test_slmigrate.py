@@ -48,10 +48,33 @@ def test_capture_dir_data():
         shutil.rmtree(test.migration_dir)
     if os.path.isdir(test.source_dir):
         shutil.rmtree(test.source_dir)
-    print (test.migration_dir)
     os.mkdir(test.migration_dir)
     os.mkdir(test.source_dir)
     os.mkdir(os.path.join(test.source_dir, "lev1"))
     os.mkdir(os.path.join(test.source_dir, "lev1", "lev2"))
     capture.capture_dir_data(test)
     assert os.path.isdir(os.path.join(test.migration_dir, "lev1", "lev2"))
+
+def test_capture_singlefile():
+    test_dict = {
+        'arg': 'test',
+        'service_nanme': "test",
+        'directory_migration': False,
+        'singlefile_migration': True,
+        'require_service_restart': False,
+        'singlefile_migration_dir': os.path.join(os.path.abspath(os.sep), "migration_test_dir"),
+        'singlefile_source_dir': os.path.join(os.path.abspath(os.sep), "source_test_dir"),
+        'singlefile_to_migrate': os.path.join(os.path.abspath(os.sep), "source_test_dir", "demofile2.txt")
+        }
+    test = SimpleNamespace(**test_dict)
+    if os.path.isdir(test.singlefile_migration_dir):
+        shutil.rmtree(test.singlefile_migration_dir)
+    if os.path.isdir(test.singlefile_source_dir):
+        shutil.rmtree(test.singlefile_source_dir)
+    os.mkdir(test.singlefile_migration_dir)
+    os.mkdir(test.singlefile_source_dir)
+    test_file = open(os.path.join(test.singlefile_source_dir, "demofile2.txt"), "a")
+    test_file.close();
+    capture.capture_singlefile(test)
+    assert os.path.isfile(os.path.join(test.singlefile_migration_dir, "demofile2.txt"))
+
