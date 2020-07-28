@@ -4,6 +4,8 @@ import pytest
 # from slmigrate import systemlinkmigrate
 
 import systemlinkmigrate
+import slmigrate.constants as constants
+import slmigrate.capture as capture
 
 def test_main():
     pass
@@ -13,6 +15,6 @@ def test_add_numbers():
     assert sum == 3
 
 def test_parse_arguments():
-    parser = systemlinkmigrate.parse_arguments(["--tags", "--tag", "--taghistory", "--tagingestion", "--opc", "--opcua", "--opcuaclient", "--fis", "--files", "--file"])
+    parser = systemlinkmigrate.parse_arguments([constants.tag.arg, constants.opc.arg, constants.fis.arg, constants.alarmrule.arg, constants.testmonitor.arg])
     assert parser.parse_known_args()
 
