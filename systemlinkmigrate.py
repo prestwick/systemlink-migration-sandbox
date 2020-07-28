@@ -11,11 +11,11 @@ def parse_arguments(args):
     parser = argparse.ArgumentParser()
     parser.add_argument ("--" + constants.capture_arg, help="capture is used to pull data and settings off SystemLink server", action="store_true", )
     parser.add_argument ("--" + constants.restore_arg, help="restore is used to push data and settings to a clean SystemLink server. ", action="store_true", )
-    parser.add_argument ("--" + constants.tag['arg'], "--tags", "--tagingestion", "--taghistory", help="Migrate tags and tag histories", action="store_true", )
-    parser.add_argument ("--" + constants.opc['arg'], "--opcua", "--opcuaclient", help="Migrate OPCUA sessions and certificates", action="store_true")
-    parser.add_argument ("--" + constants.fis['arg'], "--file", "--files", help="Migrate ingested files", action="store_true")
-    parser.add_argument ("--" + constants.testmonitor['arg'], "--test", "--tests", "--testmonitor", help="Migrate Test Monitor Data", action="store_true")
-    parser.add_argument ("--" + constants.alarmrule['arg'], "--alarms", "--alarm", help="Migrate Tag alarm rules", action="store_true")
+    parser.add_argument ("--" + constants.tag.arg, "--tags", "--tagingestion", "--taghistory", help="Migrate tags and tag histories", action="store_true", )
+    parser.add_argument ("--" + constants.opc.arg, "--opcua", "--opcuaclient", help="Migrate OPCUA sessions and certificates", action="store_true")
+    parser.add_argument ("--" + constants.fis.arg, "--file", "--files", help="Migrate ingested files", action="store_true")
+    parser.add_argument ("--" + constants.testmonitor.arg, "--test", "--tests", "--testmonitor", help="Migrate Test Monitor Data", action="store_true")
+    parser.add_argument ("--" + constants.alarmrule.arg, "--alarms", "--alarm", help="Migrate Tag alarm rules", action="store_true")
     return  parser 
 
 def add_numbers(num1, num2):
@@ -31,7 +31,7 @@ if __name__ == "__main__":
         print("You cannot use --capture and --restore simultaneously. ")
     if arguments.capture:
         for arg in vars(arguments):
-            if (getattr(arguments, arg) and arg != "capture"):
+            if (getattr(arguments, arg) and arg != constants.capture_arg):
                 service_to_migrate = getattr(constants, arg)
                 print (service_to_migrate)
                 capture.capture_migration(service_to_migrate)

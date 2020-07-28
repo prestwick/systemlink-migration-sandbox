@@ -1,4 +1,5 @@
 import os
+from types import SimpleNamespace
 
 # Global Path Constants
 migration_dir = os.path.join(os.path.abspath(os.sep), "migration")
@@ -15,9 +16,9 @@ slconf_cmd_start_service = slconf_cmd + " start-service "
 mongo_dump = os.path.join(program_file_dir, "National Instruments", "Shared", "Skyline", "NoSqlDatabase", "bin", "mongodump.exe")
 
 # Service Dictionaries
-tag = {
+tag_dict = {
     'arg': 'tag',
-    'service': "TagHistorian",
+    'name': "TagHistorian",
     'directory_migration': False,
     'singlefile_migration': True,
     'require_service_restart': True,
@@ -25,42 +26,47 @@ tag = {
     'singlefile_source_dir': os.path.join(program_data_dir, "National Instruments", "Skyline", "KeyValueDatabase"),
     'singlefile_to_migrate': os.path.join(program_data_dir, "National Instruments", "Skyline", "KeyValueDatabase", "dump.rdb")
 }
+tag = SimpleNamespace(**tag_dict)
 
-opc = {
+opc_dict = {
     'arg': 'opc',
-    'service': "OpcClient",
+    'service_nanme': "OpcClient",
     'directory_migration': True,
     'singlefile_migration': False,
     'require_service_restart': False,
     'migration_dir': os.path.join(migration_dir, "OpcClient"),
     'source_dir': os.path.join(program_data_dir, "National Instruments", "Skyline", "Data", "OpcClient")
 }
+opc = SimpleNamespace(**opc_dict)
 
-fis = {
+fis_dict = {
     'arg': 'fis',
-    'service': "FileIngestion",
+    'name': "FileIngestion",
     'directory_migration': True,
     'singlefile_migration': False,
     'require_service_restart': False,
     'migration_dir': os.path.join(migration_dir, "FileIngestion"),
     'source_dir': os.path.join(program_data_dir, "National Instruments", "Skyline", "Data", "FileIngestion")   
 }
+fis = SimpleNamespace(**fis_dict)
 
-testmonitor = {
+testmonitor_dict = {
     'arg': 'testmonitor',
-    'service': "TestMonitor",
+    'name': "TestMonitor",
     'directory_migration': False,
     'singlefile_migration': False,
     'require_service_restart': False,
 }
+testmonitor = SimpleNamespace(**testmonitor_dict)
 
-alarmrule = {
+alarmrule_dict = {
     'arg': 'alarmrule',
-    'service': "TagRuleEngine",
+    'name': "TagRuleEngine",
     'directory_migration': False,
     'singlefile_migration': False,
     'require_service_restart': False,
 }
+alarmrule = SimpleNamespace(**alarmrule_dict)
 
 # Capture and Restore argument constants
 capture_arg = 'capture'
