@@ -22,13 +22,13 @@ from slmigrate import constants
 # Setup available command line arguments
 def parse_arguments(args):
     parser = argparse.ArgumentParser()
-    parser.add_argument ("--capture", help="capture is used to pull data and settings off SystemLink server", action="store_true", )
-    parser.add_argument ("--restore", help="restore is used to push data and settings to a clean SystemLink server. ", action="store_true", )
-    parser.add_argument ("--tag", "--tags", "--tagingestion", "--taghistory", help="Migrate tags and tag histories", action="store_true", )
-    parser.add_argument ("--opc", "--opcua", "--opcuaclient", help="Migrate OPCUA sessions and certificates", action="store_true")
-    parser.add_argument ("--fis", "--file", "--files", help="Migrate ingested files", action="store_true")
-    parser.add_argument ("--test", "--tests", "--testmonitor", help="Migrate Test Monitor Data", action="store_true")
-    parser.add_argument ("--alarm", "--alarms", "--alarmrules", help="Migrate Tag alarm rules", action="store_true")
+    parser.add_argument ("--" + constants.capture, help="capture is used to pull data and settings off SystemLink server", action="store_true", )
+    parser.add_argument ("--" + constants.restore, help="restore is used to push data and settings to a clean SystemLink server. ", action="store_true", )
+    parser.add_argument ("--" + constants.tag['arg'], "--tags", "--tagingestion", "--taghistory", help="Migrate tags and tag histories", action="store_true", )
+    parser.add_argument ("--" + constants.opc['arg'], "--opcua", "--opcuaclient", help="Migrate OPCUA sessions and certificates", action="store_true")
+    parser.add_argument ("--" + constants.fis['arg'], "--file", "--files", help="Migrate ingested files", action="store_true")
+    parser.add_argument ("--" + constants.testmonitor['arg'], "--test", "--tests", "--testmonitor", help="Migrate Test Monitor Data", action="store_true")
+    parser.add_argument ("--" + constants.alarmrule['arg'], "--alarms", "--alarm", help="Migrate Tag alarm rules", action="store_true")
     return  parser 
 
 def add_numbers(num1, num2):
@@ -42,30 +42,47 @@ if __name__ == "__main__":
         print("Please use --capture or --restore to determine which direction the migration is occuring. ")
     if arguments.capture and arguments.restore:
         print("You cannot use --capture and --restore simultaneously. ")
-    if arguments.tag:
-        if arguments.capture:
-            capture.capture_migration(constants.taghistorian_service)
-        if arguments.restore:
-            restore.restore_migration(constants.taghistorian_service)
-    if arguments.opc:
-        if arguments.capture:
-            capture.capture_migration(constants.opc_service)
-        if arguments.restore:
-            restore.restore_migration(constants.opc_service)
-    if arguments.fis:
-        if arguments.capture:
-            capture.capture_migration(constants.file_sevice)
-        if arguments.restore:
-            restore.restore_migration(constants.file_sevice)
-    if arguments.test:
-        if arguments.capture:
-            capture.capture_migration(constants.testmonitor_service)
-        if arguments.restore:
-            restore.restore_migration(constants.testmonitor_service)
-    if arguments.alarm:
-        if arguments.capture:
-            capture.capture_migration(constants.tagrule_service)
-        if arguments.restore:
-            restore.restore_migration(constants.tagrule_service)
+
+    #TODO Iterate over args instead
+    # for arg in vars(args):
+    #   print arg, getattr(args, arg)
+
+    if arguments.capture:
+        for arg in vars(arguments):
+            
+            # TODO make capture string a variable
+            if (getattr(arguments, arg) and arg != "capture"):
+                #equate the argument to service dictionation
+                service_to_migrate = getattr(constants, arg)
+                print (service_to_migrate)
+                capture.capture_migration(service_to_migrate)
+
+
+
+    # if arguments.tag:
+    #     if arguments.capture:
+    #         capture.capture_migration(constants.taghistorian_service)
+    #     if arguments.restore:
+    #         restore.restore_migration(constants.taghistorian_service)
+    # if arguments.opc:
+    #     if arguments.capture:
+    #         capture.capture_migration(constants.opc_service)
+    #     if arguments.restore:
+    #         restore.restore_migration(constants.opc_service)
+    # if arguments.fis:
+    #     if arguments.capture:
+    #         capture.capture_migration(constants.file_sevice)
+    #     if arguments.restore:
+    #         restore.restore_migration(constants.file_sevice)
+    # if arguments.test:
+    #     if arguments.capture:
+    #         capture.capture_migration(constants.testmonitor_service)
+    #     if arguments.restore:
+    #         restore.restore_migration(constants.testmonitor_service)
+    # if arguments.alarm:
+    #     if arguments.capture:
+    #         capture.capture_migration(constants.tagrule_service)
+    #     if arguments.restore:
+    #         restore.restore_migration(constants.tagrule_service)
             
         
