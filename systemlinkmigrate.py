@@ -29,7 +29,6 @@ def route_migration_action(arguments):
     for arg in vars(arguments):
         if (getattr(arguments, arg) and not ((arg == constants.capture_arg) or (arg == constants.restore_arg))):
             service = getattr(constants, arg)
-            print ("DEBUG ACTION IN ROUTE MIG" + action)
             common.migrate(service, action)
     
 
