@@ -68,7 +68,7 @@ alarmrule_dict = {
     'name': "TagRuleEngine",
     'directory_migration': False,
     'singlefile_migration': False,
-    'require_service_restart': False,
+    'require_service_restart': True,
 }
 alarmrule = SimpleNamespace(**alarmrule_dict)
 
