@@ -22,7 +22,6 @@ def restore_singlefile(service):
     # os.mkdir(service.singlefile_migration_dir)
     singlefile_full_path = os.path.join(service.singlefile_migration_dir, service.singlefile_to_migrate) 
     shutil.copy(singlefile_full_path, service.singlefile_source_dir)
-    #Above coud fail if file is already there
 
 
 def restore_migration(service):
@@ -38,5 +37,5 @@ def restore_migration(service):
         restore_singlefile(service)
     if service.require_service_restart:
         print ("Starting " + service.service_to_restart + " service")
-        subprocess.run(constants.slconf_cmd_start_all + " wati")
+        subprocess.run(constants.slconf_cmd_start_all + " wait")
         #May need to specifically restart tag curret value and not the historian 
