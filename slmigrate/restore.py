@@ -31,12 +31,12 @@ def restore_migration(service):
     # Consider puting if statements within functions 
     if service.require_service_restart:
         print("Stopping " +  service.service_to_restart + " service")
-        subprocess.run(constants.slconf_cmd_stop_service + service.service_to_restart)
+        subprocess.run(constants.slconf_cmd_stop_service + service.service_to_restart + " wait")
     if (service.directory_migration):
         restore_dir_data(service)
     if (service.singlefile_migration):
         restore_singlefile(service)
     if service.require_service_restart:
         print ("Starting " + service.service_to_restart + " service")
-        subprocess.run(constants.slconf_cmd_start_service + service.service_to_restart)
+        subprocess.run(constants.slconf_cmd_start_all + " wati")
         #May need to specifically restart tag curret value and not the historian 
