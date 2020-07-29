@@ -7,6 +7,7 @@ import os, sys, shutil
 import systemlinkmigrate
 import slmigrate.constants as constants
 import slmigrate.capture as capture
+import slmigrate.common as common
 from types import SimpleNamespace
 
 def test_main():
@@ -24,7 +25,7 @@ def test_capture_mongo_data():
     test_service = constants.alarmrule
     if os.path.isdir(constants.migration_dir):
         shutil.rmtree(constants.migration_dir)
-    capture.capture_mongo_data(test_service)
+    common.execute_mongo_cmd(test_service, constants.capture_arg)
     dump_dir = os.path.join(constants.migration_dir, "nitagrule")
     assert dump_dir
 
