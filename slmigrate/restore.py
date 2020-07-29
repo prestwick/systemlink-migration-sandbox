@@ -22,7 +22,9 @@ def restore_singlefile(service):
     # os.mkdir(service.singlefile_migration_dir)
     singlefile_full_path = os.path.join(service.singlefile_migration_dir, service.singlefile_to_migrate) 
     print (singlefile_full_path)
+    print (service.single_file_source_dir)
     shutil.copy(singlefile_full_path, service.singlefile_source_dir)
+
 
 
 def restore_migration(service):
