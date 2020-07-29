@@ -1,5 +1,6 @@
 from slmigrate import constants
 import json, subprocess, os, sys, shutil
+from distutils.dir_util import copy_tree
 
 def restore_mongo_data(service):
     config_file = os.path.join(constants.program_data_dir, "National Instruments", "Skyline", "Config", service.name +".json")
@@ -12,7 +13,8 @@ def restore_mongo_data(service):
 def restore_dir_data(service):
     # check_migration_dir(dest)
     # check_migration_dir(service.migration_dir)
-    shutil.copytree(service.migration_dir, service.source_dir)
+    # shutil.copytree(service.migration_dir, service.source_dir)
+    copy_tree(service.migration_dir, service.source_dir)
     #Above coud fail if dir is already there
 
 def restore_singlefile(service):
