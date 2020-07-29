@@ -24,6 +24,7 @@ tag_dict = {
     'directory_migration': False,
     'singlefile_migration': True,
     'require_service_restart': True,
+    'service_to_restart': 'TagIngestion'
     # Consider variable just for file name and build up pathin fuctions. Alows more resture between capture and restore
     'singlefile_migration_dir': os.path.join(migration_dir, "keyvaluedb"),
     'singlefile_source_dir': os.path.join(program_data_dir, "National Instruments", "Skyline", "KeyValueDatabase"),
@@ -69,6 +70,7 @@ alarmrule_dict = {
     'directory_migration': False,
     'singlefile_migration': False,
     'require_service_restart': True,
+    'service_to_restart': 'TagRuleEngine'
 }
 alarmrule = SimpleNamespace(**alarmrule_dict)
 
