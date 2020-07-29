@@ -2,9 +2,8 @@
 # Not all services will be supported. Addtional services will be supported over time. 
 
 import os, argparse, sys
-from slmigrate import capture
-from slmigrate import restore
-from slmigrate import constants
+from slmigrate import capture, restore, constants, common
+
 
 # Setup available command line arguments
 def parse_arguments(args):
@@ -22,6 +21,17 @@ def add_numbers(num1, num2):
     sum = num1 + num2
     return sum
 
+def route_migration_action(arguments):
+    if arguments.capture:
+        action = constants.capture_arg
+    elif arguments.restore:
+        action = constants.restore_arg
+    for arg in vars(arguments):
+        if (getattr(arguments, arg) and not ((arg == constants.capture_arg) or (arg == constants.restore_arg))):
+            service = getattr(constants, arg)
+            common.migrate(service, action)
+    
+
 # Main
 if __name__ == "__main__":
     arguments = parse_arguments(sys.argv[1:]).parse_args()
@@ -29,16 +39,17 @@ if __name__ == "__main__":
         print("Please use --capture or --restore to determine which direction the migration is occuring. ")
     if arguments.capture and arguments.restore:
         print("You cannot use --capture and --restore simultaneously. ")
-    if arguments.capture:
-        for arg in vars(arguments):
-            if (getattr(arguments, arg) and arg != constants.capture_arg):
-                service_to_migrate = getattr(constants, arg)
-                print (service_to_migrate)
-                capture.capture_migration(service_to_migrate)
-    if arguments.restore:
-        for arg in vars(arguments):
-            if (getattr(arguments, arg) and arg != constants.restore_arg):
-                service_to_migrate = getattr(constants, arg)
-                print (service_to_migrate)
-                restore.restore_migration(service_to_migrate)
+    route_migration_action(arguments)
+    # if arguments.capture:
+    #     for arg in vars(arguments):
+    #         if (getattr(arguments, arg) and arg != constants.capture_arg):
+    #             service_to_migrate = getattr(constants, arg)
+    #             print (service_to_migrate)
+    #             capture.capture_migration(service_to_migrate)
+    # if arguments.restore:
+    #     for arg in vars(arguments):
+    #         if (getattr(arguments, arg) and arg != constants.restore_arg):
+    #             service_to_migrate = getattr(constants, arg)
+    #             print (service_to_migrate)
+    #             restore.restore_migration(service_to_migrate)
                 
