@@ -1,7 +1,7 @@
 from slmigrate import constants
 import json, subprocess, os, sys, shutil
 
-def execute_mongo_cmd(service, action):
+def migrate_mongo_cmd(service, action):
     config_file = os.path.join(constants.program_data_dir, "National Instruments", "Skyline", "Config", service.name +".json")
     with open(config_file, encoding='utf-8-sig') as json_file:
         config = json.load(json_file)
@@ -21,3 +21,7 @@ def start_all_sl_services(service):
     if service.require_service_restart:
         print ("Starting " + service.service_to_restart + " service")
         subprocess.run(constants.slconf_cmd_start_all)
+
+def check_migration_dir(dir):
+    if (os.path.isdir(dir)):
+        shutil.rmtree(dir)

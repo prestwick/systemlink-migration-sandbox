@@ -21,11 +21,11 @@ def test_parse_arguments():
     parser = systemlinkmigrate.parse_arguments([constants.tag.arg, constants.opc.arg, constants.fis.arg, constants.alarmrule.arg, constants.testmonitor.arg])
     assert parser.parse_known_args()
 
-def test_capture_mongo_data():
+def test_migrate_mongo_data():
     test_service = constants.alarmrule
     if os.path.isdir(constants.migration_dir):
         shutil.rmtree(constants.migration_dir)
-    common.execute_mongo_cmd(test_service, constants.capture_arg)
+    common.migrate_mongo_cmd(test_service, constants.capture_arg)
     dump_dir = os.path.join(constants.migration_dir, "nitagrule")
     assert dump_dir
 
