@@ -1,4 +1,5 @@
 from slmigrate import constants
+from distutils import dir_util
 import json, subprocess, os, sys, shutil
 
 def migrate_mongo_cmd(service, action):
@@ -25,3 +26,32 @@ def start_all_sl_services(service):
 def check_migration_dir(dir):
     if (os.path.isdir(dir)):
         shutil.rmtree(dir)
+
+def migrate_singlefile(service, action):
+    if  not service.singlefile_migration:
+        return
+    if action == constants.capture_arg:
+        check_migration_dir(service.singlefile_migration_dir)
+        os.mkdir(service.singlefile_migration_dir)
+        singlefile_full_path = os.path.join(constants.program_data_dir, "National Instruments", "Skyline", "KeyValueDatabase", service.singlefile_to_migrate)
+        shutil.copy(singlefile_full_path, service.singlefile_migration_dir)
+    elif action == constants.restore_arg:
+        singlefile_full_path = os.path.join(service.singlefile_migration_dir, service.singlefile_to_migrate) 
+        shutil.copy(singlefile_full_path, service.singlefile_source_dir)
+
+def migrate_dir(service, action):
+    if not service.directory_migration:
+        return
+    if action == constants.capture_arg:
+        check_migration_dir(service.migration_dir)
+        shutil.copytree(service.source_dir, service.migration_dir) 
+    elif action == constants.restore_arg:
+        dir_util.copy_tree(service.migration_dir, service.source_dir)
+
+def migrate(service, action):
+    print(service.name + " " + action + " migration called")
+    migrate_mongo_cmd(service, constants.capture_arg)
+    stop_sl_service(service)
+    migrate_dir(service, action)
+    migrate_singlefile(service, action)
+    start_all_sl_services
