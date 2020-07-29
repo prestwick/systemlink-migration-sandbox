@@ -40,5 +40,5 @@ def restore_migration(service):
         restore_singlefile(service)
     if service.require_service_restart:
         print ("Starting " + service.service_to_restart + " service")
-        subprocess.run(constants.slconf_cmd_start_allß)
+        subprocess.run(constants.slconf_cmd_start_all)
         #May need to specifically restart tag curret value and not the historian 
