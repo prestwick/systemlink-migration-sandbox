@@ -13,27 +13,25 @@ def check_migration_dir(dir):
         shutil.rmtree(dir)
 
 def capture_dir_data(service):
-    print ("capture_dir_data called")
-    # check_migration_dir(dest)
     check_migration_dir(service.migration_dir)
-    # shutil.copytree(source, dest) 
     shutil.copytree(service.source_dir, service.migration_dir)  
 
 def capture_singlefile(service):
     check_migration_dir(service.singlefile_migration_dir)
     os.mkdir(service.singlefile_migration_dir)
-    shutil.copy(service.singlefile_to_migrate, service.singlefile_migration_dir)
+    singlefile_full_path = os.path.join(constants.program_data_dir, "National Instruments", "Skyline", "KeyValueDatabase", service.singlefile_to_migrate)
+    shutil.copy(singlefile_full_path, service.singlefile_migration_dir)
 
 def capture_migration(service):
     print(service.name + " capture migration called")
     capture_mongo_data(service)
-    if service['service_require_restarts']:
+    if service.require_service_restart:
         print("Stopping " +  service.name + " service")
         subprocess.run(constants.slconf_cmd_stop_service + service.name)
     if (service.directory_migration):
         capture_dir_data(service)
     if (service.singlefile_migration):
         capture_singlefile(service)
-    if service.service_require_restarts:
+    if service.require_service_restart:
         print ("Starting " + service.name + " service")
         subprocess.run(constants.slconf_cmd_start_service + service.name)
