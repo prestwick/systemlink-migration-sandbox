@@ -9,28 +9,33 @@ program_data_dir = os.environ.get("ProgramData")
 
 # Variables for calling EXEs
 slconf_cmd = os.path.join(program_file_dir, "National Instruments", "Shared", "Skyline", "NISystemLinkServerConfigCmd.exe")
-slconf_cmd_stop_all = slconf_cmd + " stop-all-services" + " wait"
-slconf_cmd_start_all = slconf_cmd + " start-all-services"
+slconf_cmd_stop_all = slconf_cmd + " stop-all-services wait "
+slconf_cmd_start_all = slconf_cmd + " start-all-services wait "
 slconf_cmd_stop_service = slconf_cmd + " stop-service "
 slconf_cmd_start_service = slconf_cmd + " start-service "
 mongo_dump = os.path.join(program_file_dir, "National Instruments", "Shared", "Skyline", "NoSqlDatabase", "bin", "mongodump.exe")
+mongo_restore = os.path.join(program_file_dir, "National Instruments", "Shared", "Skyline", "NoSqlDatabase", "bin", "mongorestore.exe")
+
 
 # Service Dictionaries
 tag_dict = {
     'arg': 'tag',
-    'name': "TagHistorian",
+    'name': 'TagHistorian',
     'directory_migration': False,
     'singlefile_migration': True,
     'require_service_restart': True,
+    'service_to_restart': 'KeyValueDatabase', 
+    # Consider variable just for file name and build up pathin fuctions. Alows more resture between capture and restore
     'singlefile_migration_dir': os.path.join(migration_dir, "keyvaluedb"),
     'singlefile_source_dir': os.path.join(program_data_dir, "National Instruments", "Skyline", "KeyValueDatabase"),
-    'singlefile_to_migrate': os.path.join(program_data_dir, "National Instruments", "Skyline", "KeyValueDatabase", "dump.rdb")
+    # 'singlefile_to_migrate': os.path.join(program_data_dir, "National Instruments", "Skyline", "KeyValueDatabase", "dump.rdb")
+    'singlefile_to_migrate': 'dump.rdb'
 }
 tag = SimpleNamespace(**tag_dict)
 
 opc_dict = {
     'arg': 'opc',
-    'service_nanme': "OpcClient",
+    'name': "OpcClient",
     'directory_migration': True,
     'singlefile_migration': False,
     'require_service_restart': False,
@@ -64,7 +69,8 @@ alarmrule_dict = {
     'name': "TagRuleEngine",
     'directory_migration': False,
     'singlefile_migration': False,
-    'require_service_restart': False,
+    'require_service_restart': True,
+    'service_to_restart': 'TagRuleEngine'
 }
 alarmrule = SimpleNamespace(**alarmrule_dict)
 

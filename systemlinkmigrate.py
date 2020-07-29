@@ -35,4 +35,10 @@ if __name__ == "__main__":
                 service_to_migrate = getattr(constants, arg)
                 print (service_to_migrate)
                 capture.capture_migration(service_to_migrate)
+    if arguments.restore:
+        for arg in vars(arguments):
+            if (getattr(arguments, arg) and arg != constants.restore_arg):
+                service_to_migrate = getattr(constants, arg)
+                print (service_to_migrate)
+                restore.restore_migration(service_to_migrate)
                 
