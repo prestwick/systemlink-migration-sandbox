@@ -9,8 +9,8 @@ program_data_dir = os.environ.get("ProgramData")
 
 # Variables for calling EXEs
 slconf_cmd = os.path.join(program_file_dir, "National Instruments", "Shared", "Skyline", "NISystemLinkServerConfigCmd.exe")
-slconf_cmd_stop_all = slconf_cmd + " stop-all-services" + " wait"
-slconf_cmd_start_all = slconf_cmd + " start-all-services"
+slconf_cmd_stop_all = slconf_cmd + " stop-all-services wait "
+slconf_cmd_start_all = slconf_cmd + " start-all-services wait "
 slconf_cmd_stop_service = slconf_cmd + " stop-service "
 slconf_cmd_start_service = slconf_cmd + " start-service "
 mongo_dump = os.path.join(program_file_dir, "National Instruments", "Shared", "Skyline", "NoSqlDatabase", "bin", "mongodump.exe")
@@ -24,7 +24,7 @@ tag_dict = {
     'directory_migration': False,
     'singlefile_migration': True,
     'require_service_restart': True,
-    'service_to_restart': 'TagIngestion',
+    'service_to_restart': 'TagIngestion', 
     # Consider variable just for file name and build up pathin fuctions. Alows more resture between capture and restore
     'singlefile_migration_dir': os.path.join(migration_dir, "keyvaluedb"),
     'singlefile_source_dir': os.path.join(program_data_dir, "National Instruments", "Skyline", "KeyValueDatabase"),

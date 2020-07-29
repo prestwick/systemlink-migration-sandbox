@@ -27,11 +27,11 @@ def capture_migration(service):
     capture_mongo_data(service)
     if service.require_service_restart:
         print("Stopping " +  service.service_to_restart + " service")
-        subprocess.run(constants.slconf_cmd_stop_service + service.service_to_restart + 'wait' )
+        subprocess.run(constants.slconf_cmd_stop_service + service.service_to_restart + " wait" )
     if (service.directory_migration):
         capture_dir_data(service)
     if (service.singlefile_migration):
         capture_singlefile(service)
     if service.require_service_restart:
         print ("Starting " + service.service_to_restart + " service")
-        subprocess.run(constants.slconf_cmd_start_all + ' wait')
+        subprocess.run(constants.slconf_cmd_start_all + " wait")
