@@ -27,7 +27,7 @@ def restore_migration(service):
     print(service.name + " restore migration called")
     restore_mongo_data(service)
     # Consider puting if statements within functions 
-    if service['service_require_restarts']:
+    if service.require_service_restart:
         print("Stopping " +  service.name + " service")
         subprocess.run(constants.slconf_cmd_stop_service + service.name)
     if (service.directory_migration):
