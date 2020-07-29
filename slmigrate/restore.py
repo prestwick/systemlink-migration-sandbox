@@ -34,6 +34,6 @@ def restore_migration(service):
         restore_dir_data(service)
     if (service.singlefile_migration):
         restore_singlefile(service)
-    if service.service_require_restarts:
+    if service.require_service_restart:
         print ("Starting " + service.name + " service")
         subprocess.run(constants.slconf_cmd_start_service + service.name)
