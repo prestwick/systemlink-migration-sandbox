@@ -34,4 +34,4 @@ def capture_migration(service):
         capture_singlefile(service)
     if service.require_service_restart:
         print ("Starting " + service.service_to_restart + " service")
-        subprocess.run(constants.slconf_cmd_start_all + " wait")
+        subprocess.run(constants.slconf_cmd_start_all)
