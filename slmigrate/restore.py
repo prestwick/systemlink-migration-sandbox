@@ -20,7 +20,7 @@ def restore_dir_data(service):
 def restore_singlefile(service):
     # check_migration_dir(service.singlefile_migration_dir)
     # os.mkdir(service.singlefile_migration_dir)
-    singlefile_full_path = os.path.join(service.migration_dir,service.singlefile_to_migrate)
+    singlefile_full_path = os.path.join(service.singlefile_migration_dir, service.singlefile_to_migrate) 
     shutil.copy(singlefile_full_path, service.singlefile_source_dir)
     #Above coud fail if file is already there
 
