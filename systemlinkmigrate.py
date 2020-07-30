@@ -1,8 +1,8 @@
-# Generic migration utility for migrating various data and settings between SystemLink servers. 
-# Not all services will be supported. Addtional services will be supported over time. 
+# Generic migration utility for migrating various data and settings between SystemLink servers.
+# Not all services will be supported. Addtional services will be supported over time.
 
-import os, argparse, sys
-from slmigrate import constants, mongohandler, filehandler, arghandler, servicemgrhandler
+import sys
+from slmigrate import mongohandler, filehandler, arghandler, servicemgrhandler
 
 # Main
 if __name__ == "__main__":

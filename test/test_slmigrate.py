@@ -1,18 +1,16 @@
-import pytest
-import os, sys, shutil
+import os
+import shutil
 import slmigrate.constants as constants
 import slmigrate.mongohandler as mongohandler
 import slmigrate.arghandler as arghandler
 import slmigrate.filehandler as filehandler
-import slmigrate.servicemgrhandler as servicemgrhandler
 from types import SimpleNamespace
 
-def test_main():
-    pass
 
 def test_parse_arguments():
-    parser =arghandler.parse_arguments([constants.tag.arg, constants.opc.arg, constants.fis.arg, constants.alarmrule.arg, constants.testmonitor.arg])
+    parser = arghandler.parse_arguments([constants.tag.arg, constants.opc.arg, constants.fis.arg, constants.alarmrule.arg, constants.testmonitor.arg])
     assert parser.parse_known_args()
+
 
 def test_capture_migrate_mongo_data():
     mongo_process = mongohandler.start_mongo()
@@ -24,10 +22,12 @@ def test_capture_migrate_mongo_data():
     mongohandler.stop_mongo(mongo_process)
     assert dump_dir
 
+
 def check_migration_dir():
     test_dir = os.mkdir(os.path.join(os.path.abspath(os.sep)), "test_dir")
     filehandler.check_migration_dir(test_dir)
     assert not os.path.isdir(test_dir)
+
 
 def test_capture_migrate_dir():
     test_dict = {
@@ -51,6 +51,7 @@ def test_capture_migrate_dir():
     filehandler.migrate_dir(test, constants.capture_arg)
     assert os.path.isdir(os.path.join(test.migration_dir, "lev1", "lev2"))
 
+
 def test_capture_migrate_singlefile():
     test_dict = {
         'arg': 'test',
@@ -61,7 +62,7 @@ def test_capture_migrate_singlefile():
         'singlefile_migration_dir': os.path.join(os.path.abspath(os.sep), "migration_test_dir"),
         'singlefile_source_dir': os.path.join(os.path.abspath(os.sep), "source_test_dir"),
         'singlefile_to_migrate': os.path.join(os.path.abspath(os.sep), "source_test_dir", "demofile2.txt")
-        }
+    }
     test = SimpleNamespace(**test_dict)
     if os.path.isdir(test.singlefile_migration_dir):
         shutil.rmtree(test.singlefile_migration_dir)
@@ -70,7 +71,6 @@ def test_capture_migrate_singlefile():
     os.mkdir(test.singlefile_migration_dir)
     os.mkdir(test.singlefile_source_dir)
     test_file = open(os.path.join(test.singlefile_source_dir, "demofile2.txt"), "a")
-    test_file.close();
+    test_file.close()
     filehandler.migrate_singlefile(test, constants.capture_arg)
     assert os.path.isfile(os.path.join(test.singlefile_migration_dir, "demofile2.txt"))
-
