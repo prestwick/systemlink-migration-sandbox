@@ -7,6 +7,10 @@ def stop_sl_service(service):
     if service.require_service_restart:
         print("Stopping " +  service.service_to_restart + " service")
         subprocess.run(constants.slconf_cmd_stop_service + service.service_to_restart + " wait")
+        subprocess.run(constants.slconf_cmd_stop_all)
+
+def stop_all_sl_services():
+    subprocess.run(constants.slconf_cmd_stop_all)
     
 def start_all_sl_services(service):
     if service.require_service_restart:
