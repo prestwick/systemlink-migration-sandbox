@@ -15,8 +15,8 @@ slconf_cmd_stop_service = slconf_cmd + " stop-service "
 slconf_cmd_start_service = slconf_cmd + " start-service "
 mongo_dump = os.path.join(program_file_dir, "National Instruments", "Shared", "Skyline", "NoSqlDatabase", "bin", "mongodump.exe")
 mongo_restore = os.path.join(program_file_dir, "National Instruments", "Shared", "Skyline", "NoSqlDatabase", "bin", "mongorestore.exe")
-mongo_exe = os.path.join(program_file_dir, "National Instruments", "Shared", "Skyline", "NoSqlDatabase", "bin", "mongo.exe")
-
+mongod_exe = os.path.join(program_file_dir, "National Instruments", "Shared", "Skyline", "NoSqlDatabase", "bin", "mongod.exe")
+mongo_config = os.path.join(program_data_dir, "National Instruments", "Skyline", "NoSqlDatabase", "mongodb.conf")
 
 # Service Dictionaries
 tag_dict = {
@@ -78,4 +78,3 @@ alarmrule = SimpleNamespace(**alarmrule_dict)
 # Capture and Restore argument constants
 capture_arg = 'capture'
 restore_arg = 'restore'
-

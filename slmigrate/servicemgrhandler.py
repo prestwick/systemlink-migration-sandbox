@@ -1,7 +1,6 @@
 from slmigrate import constants
 from distutils import dir_util
-import json, subprocess, os, sys, shutil
-
+import subprocess
 
 def stop_sl_service(service):
     if service.require_service_restart:
@@ -10,9 +9,8 @@ def stop_sl_service(service):
         subprocess.run(constants.slconf_cmd_stop_all)
 
 def stop_all_sl_services():
+    print ("Stopping all SystemLink services")
     subprocess.run(constants.slconf_cmd_stop_all)
     
-def start_all_sl_services(service):
-    if service.require_service_restart:
-        print ("Starting " + service.service_to_restart + " service")
-        subprocess.run(constants.slconf_cmd_start_all)
+def start_all_sl_services():
+    subprocess.run(constants.slconf_cmd_start_all)

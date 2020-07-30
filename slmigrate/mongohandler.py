@@ -15,7 +15,9 @@ def migrate_mongo_cmd(service, action):
     subprocess.run(cmd_to_run)
 
 def start_mongo():
-    subprocess.run(constants.mongo_exe)
+  mongo_process = subprocess.Popen(constants.mongod_exe + " --config " + '"' + str(constants.mongo_config) + '"', creationflags=subprocess.CREATE_NEW_CONSOLE, env=os.environ)
+    return mongo_process
 
-def stop_mongo():
-    pass
+def stop_mongo(proc):
+    subprocess.Popen.kill(proc)
+ 

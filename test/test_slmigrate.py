@@ -15,11 +15,13 @@ def test_parse_arguments():
     assert parser.parse_known_args()
 
 def test_capture_migrate_mongo_data():
+    mongo_process = mongohandler.start_mongo()
     test_service = constants.alarmrule
     if os.path.isdir(constants.migration_dir):
         shutil.rmtree(constants.migration_dir)
     mongohandler.migrate_mongo_cmd(test_service, constants.capture_arg)
     dump_dir = os.path.join(constants.migration_dir, "nitagrule")
+    mongohandler.stop_mongo(mongo_process)
     assert dump_dir
 
 def check_migration_dir():
