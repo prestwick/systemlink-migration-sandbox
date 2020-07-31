@@ -5,7 +5,7 @@ test:
 	pytest -s -v test/test_$(test_files).py --doctest-modules --cov slmigrate --cov-config=.coveragerc --cov-report term-missing
 
 lint:
-	flake8 $(files)
+	flake8 $(files) --exclude basic_scripts
 
 fix:
 	autopep8 --in-place -r $(files)

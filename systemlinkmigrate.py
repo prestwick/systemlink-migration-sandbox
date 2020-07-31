@@ -1,55 +1,23 @@
-# Generic migration utility for migrating various data and settings between SystemLink servers. 
-# Not all services will be supported. Addtional services will be supported over time. 
+# Generic migration utility for migrating various data and settings between SystemLink servers.
+# Not all services will be supported. Addtional services will be supported over time.
 
-import os, argparse, sys
-from slmigrate import capture, restore, constants, common
-
-
-# Setup available command line arguments
-def parse_arguments(args):
-    parser = argparse.ArgumentParser()
-    parser.add_argument ("--" + constants.capture_arg, help="capture is used to pull data and settings off SystemLink server", action="store_true", )
-    parser.add_argument ("--" + constants.restore_arg, help="restore is used to push data and settings to a clean SystemLink server. ", action="store_true", )
-    parser.add_argument ("--" + constants.tag.arg, "--tags", "--tagingestion", "--taghistory", help="Migrate tags and tag histories", action="store_true", )
-    parser.add_argument ("--" + constants.opc.arg, "--opcua", "--opcuaclient", help="Migrate OPCUA sessions and certificates", action="store_true")
-    parser.add_argument ("--" + constants.fis.arg, "--file", "--files", help="Migrate ingested files", action="store_true")
-    parser.add_argument ("--" + constants.testmonitor.arg, "--test", "--tests", "--testmonitor", help="Migrate Test Monitor Data", action="store_true")
-    parser.add_argument ("--" + constants.alarmrule.arg, "--alarms", "--alarm", help="Migrate Tag alarm rules", action="store_true")
-    return  parser 
-
-def add_numbers(num1, num2):
-    sum = num1 + num2
-    return sum
-
-def route_migration_action(arguments):
-    if arguments.capture:
-        action = constants.capture_arg
-    elif arguments.restore:
-        action = constants.restore_arg
-    for arg in vars(arguments):
-        if (getattr(arguments, arg) and not ((arg == constants.capture_arg) or (arg == constants.restore_arg))):
-            service = getattr(constants, arg)
-            common.migrate(service, action)
-    
+import sys
+from slmigrate import mongohandler, filehandler, arghandler, servicemgrhandler, constants
 
 # Main
 if __name__ == "__main__":
-    arguments = parse_arguments(sys.argv[1:]).parse_args()
-    if not(arguments.capture) and not(arguments.restore):
-        print("Please use --capture or --restore to determine which direction the migration is occuring. ")
-    if arguments.capture and arguments.restore:
-        print("You cannot use --capture and --restore simultaneously. ")
-    route_migration_action(arguments)
-    # if arguments.capture:
-    #     for arg in vars(arguments):
-    #         if (getattr(arguments, arg) and arg != constants.capture_arg):
-    #             service_to_migrate = getattr(constants, arg)
-    #             print (service_to_migrate)
-    #             capture.capture_migration(service_to_migrate)
-    # if arguments.restore:
-    #     for arg in vars(arguments):
-    #         if (getattr(arguments, arg) and arg != constants.restore_arg):
-    #             service_to_migrate = getattr(constants, arg)
-    #             print (service_to_migrate)
-    #             restore.restore_migration(service_to_migrate)
-                
+    arguments = arghandler.parse_arguments(sys.argv[1:]).parse_args()
+    arghandler.handle_unallowed_args(arguments)
+    servicemgrhandler.stop_all_sl_services()
+    mongo_proc = mongohandler.start_mongo(constants.mongod_exe, constants.mongo_config)
+    services_to_migrate = arghandler.determine_migrate_action(arguments)
+    for service_to_migrate in services_to_migrate:
+        service = service_to_migrate[0]
+        action = service_to_migrate[1]
+        print(service.name + " " + action + " migration called")
+        config = mongohandler.get_service_config(service)
+        mongohandler.migrate_mongo_cmd(service, action, config)
+        filehandler.migrate_dir(service, action)
+        filehandler.migrate_singlefile(service, action)
+    mongohandler.stop_mongo(mongo_proc)
+    servicemgrhandler.start_all_sl_services()

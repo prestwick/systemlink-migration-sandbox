@@ -15,6 +15,9 @@ slconf_cmd_stop_service = slconf_cmd + " stop-service "
 slconf_cmd_start_service = slconf_cmd + " start-service "
 mongo_dump = os.path.join(program_file_dir, "National Instruments", "Shared", "Skyline", "NoSqlDatabase", "bin", "mongodump.exe")
 mongo_restore = os.path.join(program_file_dir, "National Instruments", "Shared", "Skyline", "NoSqlDatabase", "bin", "mongorestore.exe")
+mongod_exe = os.path.join(program_file_dir, "National Instruments", "Shared", "Skyline", "NoSqlDatabase", "bin", "mongod.exe")
+mongo_config = os.path.join(program_data_dir, "National Instruments", "Skyline", "NoSqlDatabase", "mongodb.conf")
+service_config_dir = config_file = os.path.join(program_data_dir, "National Instruments", "Skyline", "Config")
 
 
 # Service Dictionaries
@@ -24,7 +27,7 @@ tag_dict = {
     'directory_migration': False,
     'singlefile_migration': True,
     'require_service_restart': True,
-    'service_to_restart': 'KeyValueDatabase', 
+    'service_to_restart': 'KeyValueDatabase',
     # Consider variable just for file name and build up pathin fuctions. Alows more resture between capture and restore
     'singlefile_migration_dir': os.path.join(migration_dir, "keyvaluedb"),
     'singlefile_source_dir': os.path.join(program_data_dir, "National Instruments", "Skyline", "KeyValueDatabase"),
@@ -51,7 +54,7 @@ fis_dict = {
     'singlefile_migration': False,
     'require_service_restart': False,
     'migration_dir': os.path.join(migration_dir, "FileIngestion"),
-    'source_dir': os.path.join(program_data_dir, "National Instruments", "Skyline", "Data", "FileIngestion")   
+    'source_dir': os.path.join(program_data_dir, "National Instruments", "Skyline", "Data", "FileIngestion")
 }
 fis = SimpleNamespace(**fis_dict)
 
@@ -77,4 +80,3 @@ alarmrule = SimpleNamespace(**alarmrule_dict)
 # Capture and Restore argument constants
 capture_arg = 'capture'
 restore_arg = 'restore'
-
