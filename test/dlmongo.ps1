@@ -41,8 +41,8 @@ if ((Test-Path -path $mongoDbPath) -eq $false)
 	Write-Host "Installing Mongod as a service..."
 	& $mongoDBPath\bin\mongod.exe --config $mongoDbConfigPath --install
 
-	Write-Host "Starting Mongod..."
-	& net start mongodb
+	# Write-Host "Starting Mongod..."
+	# & net start mongodb
 }
 else {
 	Write-Host "MongoDB already installed."

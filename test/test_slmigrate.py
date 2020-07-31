@@ -4,6 +4,7 @@ import slmigrate.constants as constants
 import slmigrate.mongohandler as mongohandler
 import slmigrate.arghandler as arghandler
 import slmigrate.filehandler as filehandler
+from test import test_constants
 from types import SimpleNamespace
 
 
@@ -13,12 +14,13 @@ def test_parse_arguments():
 
 
 def test_capture_migrate_mongo_data():
-    mongo_process = mongohandler.start_mongo()
-    test_service = constants.alarmrule
+    mongo_process = mongohandler.start_mongo(test_constants.mongod_exe, test_constants.mongo_config) 
+    test_service = test_constants.test_service
     if os.path.isdir(constants.migration_dir):
         shutil.rmtree(constants.migration_dir)
-    mongohandler.migrate_mongo_cmd(test_service, constants.capture_arg)
-    dump_dir = os.path.join(constants.migration_dir, "nitagrule")
+    config = mongohandler.get_service_config(test_service, True)
+    mongohandler.migrate_mongo_cmd(test_service, constants.capture_arg, config)
+    dump_dir = os.path.join(constants.migration_dir, "local")
     mongohandler.stop_mongo(mongo_process)
     assert dump_dir
 
