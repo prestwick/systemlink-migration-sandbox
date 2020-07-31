@@ -23,6 +23,7 @@ def handle_unallowed_args(arguments):
 
 
 def determine_migrate_action(arguments):
+    services_to_migrate = []
     if arguments.capture:
         action = constants.capture_arg
     elif arguments.restore:
@@ -30,4 +31,6 @@ def determine_migrate_action(arguments):
     for arg in vars(arguments):
         if (getattr(arguments, arg) and not ((arg == constants.capture_arg) or (arg == constants.restore_arg))):
             service = getattr(constants, arg)
-    return (service, action)
+            services_to_migrate.append((service, action))
+    # return (service, action)
+    return services_to_migrate
