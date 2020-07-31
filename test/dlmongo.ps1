@@ -38,8 +38,8 @@ if ((Test-Path -path $mongoDbPath) -eq $false)
 	Remove-Item $unzippedFolderContent -recurse -force 
 	Remove-Item $zipFile -recurse -force
 
-	Write-Host "Installing Mongod as a service..."
-	& $mongoDBPath\bin\mongod.exe --config $mongoDbConfigPath --install
+	# Write-Host "Installing Mongod as a service..."
+	# & $mongoDBPath\bin\mongod.exe --config $mongoDbConfigPath --install
 
 	# Write-Host "Starting Mongod..."
 	# & net start mongodb
