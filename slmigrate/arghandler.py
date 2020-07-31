@@ -32,5 +32,4 @@ def determine_migrate_action(arguments):
         if (getattr(arguments, arg) and not ((arg == constants.capture_arg) or (arg == constants.restore_arg))):
             service = getattr(constants, arg)
             services_to_migrate.append((service, action))
-    # return (service, action)
     return services_to_migrate

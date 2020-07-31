@@ -21,7 +21,6 @@ def migrate_mongo_cmd(service, action, config):
 
 def start_mongo(mongod_exe, mongo_config):
     mongo_process = subprocess.Popen(mongod_exe + " --config " + '"' + str(mongo_config) + '"', creationflags=subprocess.CREATE_NEW_CONSOLE, env=os.environ)
-    # mongo_process = subprocess.Popen(mongod_exe + " --config " + '"' + str(mongo_config) + '"')
     return mongo_process
 
 
