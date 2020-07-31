@@ -9,7 +9,8 @@ $unzippedFolderContent ="$mongoDbPath\mongodb-win32-x86_64-2008plus-3.2.7"
  
 if ((Test-Path -path $mongoDbPath) -eq $false) 
 {
-	Write-Host "Setting up directories..."
+    Write-Host "Setting up directories..."
+    Write-Host "Mongo DB is at "$mongoDbPath
 	$temp = md $mongoDbPath 
 	$temp = md "$mongoDbPath\log" 
 	$temp = md "$mongoDbPath\data" 
