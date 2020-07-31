@@ -1,7 +1,8 @@
 #
 # MongoDB (as a windows service)
 #
-$mongoDbPath = "$env:SystemDrive\MongoDB" 
+# $mongoDbPath = "$env:SystemDrive\MongoDB" <-- I dont like hardcoding this path, but not sure how else to reference D:\ drive
+$mongoDBPath = "D:\MongoDB"
 $mongoDbConfigPath = "$mongoDbPath\mongod.cfg"
 $url = "https://fastdl.mongodb.org/win32/mongodb-win32-x86_64-2008plus-3.2.7.zip" 
 $zipFile = "$mongoDbPath\mongo.zip" 
@@ -11,6 +12,7 @@ if ((Test-Path -path $mongoDbPath) -eq $false)
 {
     Write-Host "Setting up directories..."
     Write-Host "Mongo DB is at "$mongoDbPath
+    # TODO this is installing at C but the config file is at D :-(
 	$temp = md $mongoDbPath 
 	$temp = md "$mongoDbPath\log" 
 	$temp = md "$mongoDbPath\data" 
