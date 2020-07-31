@@ -14,11 +14,15 @@ def test_parse_arguments():
 
 
 def test_capture_migrate_mongo_data():
-    mongo_process = mongohandler.start_mongo(test_constants.mongod_exe, test_constants.mongo_config) 
+    constants.mongo_config = test_constants.mongo_config
+    constants.mongo_dump = test_constants.mongo_dump
+    constants.mongo_restore = test_constants.mongo_restore
+    constants.service_config_dir = test_constants.service_config_dir
+    mongo_process = mongohandler.start_mongo(test_constants.mongod_exe, test_constants.mongo_config)
     test_service = test_constants.test_service
     if os.path.isdir(constants.migration_dir):
         shutil.rmtree(constants.migration_dir)
-    config = mongohandler.get_service_config(test_service, True)
+    config = mongohandler.get_service_config(test_service, False)
     mongohandler.migrate_mongo_cmd(test_service, constants.capture_arg, config)
     dump_dir = os.path.join(constants.migration_dir, "local")
     mongohandler.stop_mongo(mongo_process)

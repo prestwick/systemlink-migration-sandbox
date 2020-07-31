@@ -2,11 +2,10 @@
 # Not all services will be supported. Addtional services will be supported over time.
 
 import sys
-from slmigrate import mongohandler, filehandler, arghandler, servicemgrhandler
+from slmigrate import mongohandler, filehandler, arghandler, servicemgrhandler, constants
 
 # Main
 if __name__ == "__main__":
-    print(__file__);
     arguments = arghandler.parse_arguments(sys.argv[1:]).parse_args()
     arghandler.handle_unallowed_args(arguments)
     servicemgrhandler.stop_all_sl_services()
