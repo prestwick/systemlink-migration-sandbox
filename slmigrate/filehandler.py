@@ -12,7 +12,6 @@ def determine_migration_dir(service):
 def check_migration_dir(dir):
     if (os.path.isdir(dir)):
         shutil.rmtree(dir)
-    
 
 
 def migrate_singlefile(service, action):
@@ -22,7 +21,7 @@ def migrate_singlefile(service, action):
     if action == constants.capture_arg:
         check_migration_dir(migration_dir)
         os.mkdir(migration_dir)
-        singlefile_full_path = os.path.join(constants.program_data_dir,service.singlefile_source_dir, service.singlefile_to_migrate)
+        singlefile_full_path = os.path.join(constants.program_data_dir, service.singlefile_source_dir, service.singlefile_to_migrate)
         shutil.copy(singlefile_full_path, migration_dir)
     elif action == constants.restore_arg:
         singlefile_full_path = os.path.join(migration_dir, service.singlefile_to_migrate)
@@ -33,7 +32,7 @@ def migrate_dir(service, action):
     if not service.directory_migration:
         return
     if action == constants.capture_arg:
-        migratation_dir  = determine_migration_dir(service)
+        migratation_dir = determine_migration_dir(service)
         check_migration_dir(migratation_dir)
         shutil.copytree(service.source_dir, migratation_dir)
     elif action == constants.restore_arg:

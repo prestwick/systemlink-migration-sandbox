@@ -37,5 +37,6 @@ def determine_migrate_action(arguments):
             services_to_migrate.append((service, action))
     return services_to_migrate
 
+
 def determin_migration_dir(arguments):
     constants.migration_dir = getattr(arguments, constants.migration_arg)

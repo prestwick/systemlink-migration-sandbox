@@ -5,7 +5,6 @@ import slmigrate.mongohandler as mongohandler
 import slmigrate.arghandler as arghandler
 import slmigrate.filehandler as filehandler
 from test import test_constants
-from types import SimpleNamespace
 
 
 def test_parse_arguments():
@@ -52,7 +51,6 @@ def test_capture_migrate_dir():
     shutil.rmtree(constants.migration_dir)
 
 
-
 def test_capture_migrate_singlefile():
     constants.migration_dir = test_constants.migration_dir
     test = test_constants.test_service
@@ -65,6 +63,6 @@ def test_capture_migrate_singlefile():
     test_file = open(os.path.join(test.singlefile_source_dir, "demofile2.txt"), "a")
     test_file.close()
     filehandler.migrate_singlefile(test, constants.capture_arg)
-    assert os.path.isfile(os.path.join(test.migration_dir,  "demofile2.txt"))
+    assert os.path.isfile(os.path.join(test.migration_dir, "demofile2.txt"))
     shutil.rmtree(test.source_dir)
     shutil.rmtree(constants.migration_dir)
