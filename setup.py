@@ -1,5 +1,7 @@
 from pathlib import Path
 from setuptools import setup
+import subprocess
+import os
 
 from slmigrate import __version__
 
@@ -16,7 +18,7 @@ def read(fname):
 def read_requirements(filename):
     with open(filename) as f:
         return f.read().splitlines()
-
+        
 
 settings = dict(
     name='slmigrate',
