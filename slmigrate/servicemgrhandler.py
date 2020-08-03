@@ -10,9 +10,10 @@ def stop_sl_service(service):
 
 
 def stop_all_sl_services():
-    print("Stopping all SystemLink services")
+    print("Stopping all SystemLink services...")
     subprocess.run(constants.slconf_cmd_stop_all)
 
 
 def start_all_sl_services():
+    print("Starting all SystemLink services")
     subprocess.run(constants.slconf_cmd_start_all)
