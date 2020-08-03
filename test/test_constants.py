@@ -20,6 +20,6 @@ test_dict = {
     'singlefile_source_dir': os.path.join(os.path.abspath(os.sep), "source_test_dir"),
     'singlefile_to_migrate': os.path.join(os.path.abspath(os.sep), "source_test_dir", "demofile2.txt"),
     'migration_dir': os.path.join(migration_dir, "local"),
-    # 'source_dir': os.path.join(os.path.abspath(os.sep), "source_test_dir")
+    'source_dir': os.path.join(os.path.abspath(os.sep), "source_test_dir")
 }
 test_service = SimpleNamespace(**test_dict)

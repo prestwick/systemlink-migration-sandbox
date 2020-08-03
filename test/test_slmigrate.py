@@ -17,6 +17,7 @@ def test_capture_migrate_mongo_data():
     constants.mongo_config = test_constants.mongo_config
     constants.mongo_dump = test_constants.mongo_dump
     constants.mongo_restore = test_constants.mongo_restore
+    constants.migration_dir = test_constants.migration_dir
     constants.service_config_dir = test_constants.service_config_dir
     mongo_process = mongohandler.start_mongo(test_constants.mongod_exe, test_constants.mongo_config)
     test_service = test_constants.test_service
@@ -36,51 +37,34 @@ def check_migration_dir():
 
 
 def test_capture_migrate_dir():
-    # test_dict = {
-    #     'arg': 'test',
-    #     'service_nanme': "test",
-    #     'directory_migration': True,
-    #     'singlefile_migration': False,
-    #     'require_service_restart': False,
-    #     'migration_dir': os.path.join(os.path.abspath(os.sep), "mig_test_dir"),
-    #     'source_dir': os.path.join(os.path.abspath(os.sep), "source_test_dir")
-    # }
-    # test = SimpleNamespace(**test_dict)
     test = test_constants.test_service
+    constants.migration_dir = test_constants.migration_dir
     if os.path.isdir(test.migration_dir):
         shutil.rmtree(test.migration_dir)
     if os.path.isdir(test.source_dir):
         shutil.rmtree(test.source_dir)
-    os.mkdir(test.migration_dir)
     os.mkdir(test.source_dir)
     os.mkdir(os.path.join(test.source_dir, "lev1"))
     os.mkdir(os.path.join(test.source_dir, "lev1", "lev2"))
     filehandler.migrate_dir(test, constants.capture_arg)
-    assert os.path.isdir(os.path.join(test.migration_dir, "lev1", "lev2"))
+    assert os.path.isdir(os.path.join(constants.migration_dir, test.name, "lev1", "lev2"))
+    shutil.rmtree(test.source_dir)
+    shutil.rmtree(constants.migration_dir)
+
 
 
 def test_capture_migrate_singlefile():
-    # test_dict = {
-    #     'arg': 'test',
-    #     'service_name': "test",
-    #     'directory_migration': False,
-    #     'singlefile_migration': True,
-    #     'require_service_restart': False,
-    #     'singlefile_migration_dir': os.path.join(os.path.abspath(os.sep), "migration_test_dir"),
-    #     'singlefile_source_dir': os.path.join(os.path.abspath(os.sep), "source_test_dir"),
-    #     'singlefile_to_migrate': os.path.join(os.path.abspath(os.sep), "source_test_dir", "demofile2.txt")
-    # }
-    # test = SimpleNamespace(**test_dict)
     constants.migration_dir = test_constants.migration_dir
     test = test_constants.test_service
     if os.path.isdir(test.singlefile_migration_dir):
         shutil.rmtree(test.singlefile_migration_dir)
     if os.path.isdir(test.singlefile_source_dir):
         shutil.rmtree(test.singlefile_source_dir)
-    # os.mkdir(test.singlefile_migration_dir)
     os.mkdir(test.singlefile_source_dir)
     os.mkdir(constants.migration_dir)
     test_file = open(os.path.join(test.singlefile_source_dir, "demofile2.txt"), "a")
     test_file.close()
     filehandler.migrate_singlefile(test, constants.capture_arg)
     assert os.path.isfile(os.path.join(test.migration_dir,  "demofile2.txt"))
+    shutil.rmtree(test.source_dir)
+    shutil.rmtree(constants.migration_dir)
