@@ -31,8 +31,8 @@ def migrate_singlefile(service, action):
 def migrate_dir(service, action):
     if not service.directory_migration:
         return
+    migratation_dir = determine_migration_dir(service)
     if action == constants.capture_arg:
-        migratation_dir = determine_migration_dir(service)
         check_migration_dir(migratation_dir)
         shutil.copytree(service.source_dir, migratation_dir)
     elif action == constants.restore_arg:
