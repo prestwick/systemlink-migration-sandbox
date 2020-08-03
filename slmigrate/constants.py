@@ -3,7 +3,8 @@ from types import SimpleNamespace
 
 # Global Path Constants
 migration_dir = os.path.join(os.path.abspath(os.sep), "migration")
-no_sql_dump_dir = os.path.join(migration_dir, "mongo-dump")
+migration_arg = "dir"
+# no_sql_dump_dir = os.path.join(migration_dir, "mongo-dump")
 program_file_dir = os.environ.get("ProgramW6432")
 program_data_dir = os.environ.get("ProgramData")
 
