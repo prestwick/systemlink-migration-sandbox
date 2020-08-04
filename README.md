@@ -1,18 +1,15 @@
-# systemlink-migration-sandbox
-A place for example PowerShell scripts used to migrate data and setting between SystemLink servers. We encourage migration to servers with a fresh install of SystemLink that contains no production data. 
-
 # Migrating with systemlinkmigrate.py
 
 ## Prerequisites 
 ### SystemLink
 - These scripts assume migration from a SystemLink 2020R1 (20.0) to another SystemLink 2020R1 server 
 - These scripts assume a single-box SystemLink installation. 
-- These scripts are designed to un on the same machines as the SystemLink installation. They do not support remote migration.
+- These scripts are designed to run on the same machines as the SystemLink installation. They do not support remote migration.
 
 ### Python
-- These scripts require >=Python3 to run. Installers can be found at [python.org](https://www.python.org/downloads/)
+- These scripts require >=Python3 to run. Installers can be found at [python.org](https://www.python.org/downloads/).
 - The documentation in this repo assumes Python has been added to your **PATH**. 
-- Depending on the setup of your environment you may invoke python with `python`, `python3`, or `py`. Documentation in this repo use `py`. 
+- Depending on your environment you may invoke python with `python`, `python3`, or `py`. Documentation in this repo use `py`. 
 
 ## Running systemlinkmigrate.py
 ### Basic usage
@@ -32,7 +29,7 @@ Running `systemlinkmigrate.py` with the above arguments will restore tag and tag
 The `--capture` and `--restore` arguments determine the directionality of the migration. The `--capture` argument is used when migrating data FROM an existing SystemLink server. The `--restore` argument is used when migrating data TO a new SystemLink server. At least one of these arguments must be specified and both arguments cannot be used simultaneously. 
 
 ### Specifying services to migrate
-To migrate the data associated with a SystemLink service you must specify the service as an argument. Multiple services may be captured or restored by providing multiple arguments; e.g.
+To migrate the data associated with a SystemLink service you must specify the service as an argument. Multiple services may be captured or restored by providing multiple arguments; e.g:
 
 ```bash
 py systemlinkmigrate.py --capture --tags --opc
@@ -46,6 +43,8 @@ The following services can be migrated with this utility:
 - OPCUA Client: `--opc`
 - File Ingestion: `--file`
 - Test Monitor: `--test`
+
+...with more on the way.
 
 ## Specifying a Migration Directory
 By default this tool will migrate data into the directory `C:\migrate`. During *capture* this directory is created. During *restore* this directory is expected to be present. The `--dir` argument allows for other directories and locations to be specified. For example:
@@ -91,6 +90,6 @@ parser.add_argument("--" + constants.opc.arg, "--opcua", "--opcuaclient", help="
 ```
 
 ## Tests and CI
-By and large tests should be agnostic to a particular service, and use the `test_service` in `slmigrate/test/test_constants.py` whenever possible. Please note that constants in `test_constants.py` are not used directly and instead overwrite analogous constants in `constants.py`. This allows functions to be tested more directly and not contain conditional logic for test case, which in turn allows test to be run on a CI without SystemLink installed. 
+By and large tests should be agnostic to a particular service, and use the `test_service` in `slmigrate/test/test_constants.py` whenever possible. 
 
 All tests must pass and all code pass `flake8` linting before new code to be checked into `master`. 
