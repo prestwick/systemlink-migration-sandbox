@@ -1,4 +1,6 @@
+import pytest
 import os
+import sys
 import shutil
 import slmigrate.constants as constants
 import slmigrate.mongohandler as mongohandler
@@ -8,8 +10,41 @@ from test import test_constants
 
 
 def test_parse_arguments():
-    parser = arghandler.parse_arguments([constants.tag.arg, constants.opc.arg, constants.fis.arg, constants.alarmrule.arg, constants.testmonitor.arg])
-    assert parser.parse_known_args()
+    parser = arghandler.parse_arguments(sys.argv[1:])
+    assert parser.parse_args(["--" + constants.tag.arg, "--" + constants.opc.arg, "--" + constants.testmonitor.arg, "--" + constants.alarmrule.arg, "--" + constants.opc.arg])
+
+
+def test_double_action_args():
+    parser = arghandler.parse_arguments(sys.argv[1:])
+    # do something similar in test_parse_arguments
+    arguments = parser.parse_args(["--" + constants.capture_arg, "--" + constants.restore_arg])
+    with pytest.raises(SystemExit) as pytest_wrapped_e:
+        arghandler.handle_unallowed_args(arguments)
+    assert pytest_wrapped_e.type == SystemExit
+
+
+def test_no_action_args():
+    parser = arghandler.parse_arguments(2)
+    arguments = parser.parse_args(["--" + constants.tag.arg])
+    with pytest.raises(SystemExit) as pytest_wrapped_e:
+        arghandler.handle_unallowed_args(arguments)
+    assert pytest_wrapped_e.type == SystemExit
+
+
+def test_determine_migrate_action_capture():
+    test_service_tuple = [(constants.tag, constants.capture_arg)]
+    parser = arghandler.parse_arguments(sys.argv[1:])
+    arguments = parser.parse_args(["--" + constants.tag.arg, "--" + constants.capture_arg])
+    services_to_migrate = arghandler.determine_migrate_action(arguments)
+    assert services_to_migrate == test_service_tuple
+
+
+def test_determine_migrate_action_restore():
+    test_service_tuple = [(constants.opc, constants.capture_arg)]
+    parser = arghandler.parse_arguments(sys.argv[1:])
+    arguments = parser.parse_args(["--" + constants.opc.arg, "--" + constants.capture_arg])
+    services_to_migrate = arghandler.determine_migrate_action(arguments)
+    assert services_to_migrate == test_service_tuple
 
 
 def test_capture_migrate_mongo_data():
@@ -26,7 +61,7 @@ def test_capture_migrate_mongo_data():
     mongohandler.migrate_mongo_cmd(test_service, constants.capture_arg, config)
     dump_dir = os.path.join(constants.migration_dir, "local")
     mongohandler.stop_mongo(mongo_process)
-    assert dump_dir
+    assert os.path.isfile(os.path.join(dump_dir, *.bson.gz))
 
 
 def check_migration_dir():
