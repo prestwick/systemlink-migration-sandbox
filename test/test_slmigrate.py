@@ -16,7 +16,6 @@ def test_parse_arguments():
 
 def test_double_action_args():
     parser = arghandler.parse_arguments(sys.argv[1:])
-    # do something similar in test_parse_arguments
     arguments = parser.parse_args(["--" + constants.capture_arg, "--" + constants.restore_arg])
     with pytest.raises(SystemExit) as pytest_wrapped_e:
         arghandler.handle_unallowed_args(arguments)
@@ -61,7 +60,9 @@ def test_capture_migrate_mongo_data():
     mongohandler.migrate_mongo_cmd(test_service, constants.capture_arg, config)
     dump_dir = os.path.join(constants.migration_dir, "local")
     mongohandler.stop_mongo(mongo_process)
-    assert os.path.isfile(os.path.join(dump_dir, *.bson.gz))
+    files = os.walk(dump_dir)
+    for file in files:
+        assert str(file).endswith((".bzon.gz, .json.gz"))
 
 
 def check_migration_dir():
