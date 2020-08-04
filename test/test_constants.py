@@ -11,7 +11,7 @@ service_config_dir = os.path.join(os.getcwd(), "test")
 migration_dir = os.path.join(os.path.abspath(os.sep), "migration_test")
 
 test_dict = {
-    'arg': 'test',
+    'arg': 'test_service',
     'name': "local",
     'directory_migration': True,
     'singlefile_migration': True,

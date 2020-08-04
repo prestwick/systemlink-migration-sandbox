@@ -27,8 +27,6 @@ tag_dict = {
     'name': 'TagHistorian',
     'directory_migration': False,
     'singlefile_migration': True,
-    'require_service_restart': True,
-    'service_to_restart': 'KeyValueDatabase',
     'singlefile_migration_dir': os.path.join(migration_dir, "keyvaluedb"),
     'singlefile_source_dir': os.path.join(program_data_dir, "National Instruments", "Skyline", "KeyValueDatabase"),
     'singlefile_to_migrate': 'dump.rdb'
@@ -40,7 +38,6 @@ opc_dict = {
     'name': "OpcClient",
     'directory_migration': True,
     'singlefile_migration': False,
-    'require_service_restart': False,
     'migration_dir': os.path.join(migration_dir, "OpcClient"),
     'source_dir': os.path.join(program_data_dir, "National Instruments", "Skyline", "Data", "OpcClient")
 }
@@ -51,7 +48,6 @@ fis_dict = {
     'name': "FileIngestion",
     'directory_migration': True,
     'singlefile_migration': False,
-    'require_service_restart': False,
     'migration_dir': os.path.join(migration_dir, "FileIngestion"),
     'source_dir': os.path.join(program_data_dir, "National Instruments", "Skyline", "Data", "FileIngestion")
 }
@@ -62,7 +58,6 @@ testmonitor_dict = {
     'name': "TestMonitor",
     'directory_migration': False,
     'singlefile_migration': False,
-    'require_service_restart': False,
 }
 testmonitor = SimpleNamespace(**testmonitor_dict)
 
@@ -71,7 +66,6 @@ alarmrule_dict = {
     'name': "TagRuleEngine",
     'directory_migration': False,
     'singlefile_migration': False,
-    'require_service_restart': True,
     'service_to_restart': 'TagRuleEngine'
 }
 alarmrule = SimpleNamespace(**alarmrule_dict)
