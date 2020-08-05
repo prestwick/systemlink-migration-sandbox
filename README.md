@@ -2,7 +2,9 @@
 
 ## Prerequisites 
 ### SystemLink
-- These scripts assume migration from a SystemLink 2020R1 (20.0) to another SystemLink 2020R1 server 
+- These scripts assume migration from a SystemLink 2020R1 (20.0) to another SystemLink 2020R1 or 2020R2 server 
+    - **We assume the server you are migrating to is clean with no data. Migrating to a server with existing data will result in data loss.**
+    - Not all services can be migrated from a 2020R1 server to a 2020R2 server. Please review **Supported Services** for details
 - These scripts assume a single-box SystemLink installation. 
 - These scripts are designed to run on the same machines as the SystemLink installation. They do not support remote migration.
 
@@ -44,10 +46,20 @@ The following services can be migrated with this utility:
 - File Ingestion: `--file`
 - Test Monitor: `--test`
 - Asset Management: `--asset`
-    - Cannot migrate between 2020R1 and 2020R2 due to changes in database format
+    - Cannot be migrated between 2020R1 and 2020R2 servers
 - Repository: `--repo`
+    - Feeds may require additional updates if servers used for migration have different domain names
+- User Data: `--userdata`
+- Notifications: `--notification`
+- States: `--states`
+    - Feeds may require additional updates if servers used for migration have different domain names
+    - Cannot be migrated between 2020R1 and 2020R2 servers
 
 ...with more on the way.
+
+#### Service Not Supported
+The following list of services is explicitly not supported because of issues that arose when developing and testing migrating the service that will require changes to the service rather than the migration utility to enable support. 
+- Cloud Connector
 
 ## Specifying a Migration Directory
 By default this tool will migrate data into the directory `C:\migrate`. During *capture* this directory is created. During *restore* this directory is expected to be present. The `--dir` argument allows for other directories and locations to be specified. For example:

@@ -82,10 +82,36 @@ repository_dict = {
     'name': "Repository",
     'directory_migration': True,
     'singlefile_migration': False,
-    'migration_dir': os.path.join(migration_dir, "FileIngestion"),
+    'migration_dir': os.path.join(migration_dir, "Respository"),
     'source_dir': os.path.join(program_file_dir, "National Instruments", "Shared", "Web Services", "NI", "repo_webservice", "files")
 }
 repository = SimpleNamespace(**repository_dict)
+
+userdata_dict = {
+    'arg': 'userdata',
+    'name': "UserData",
+    'directory_migration': False,
+    'singlefile_migration': False,
+}
+userdata = SimpleNamespace(**userdata_dict)
+
+notification_dict = {
+    'arg': 'notification',
+    'name': "Notification",
+    'directory_migration': False,
+    'singlefile_migration': False,
+}
+notification = SimpleNamespace(**notification_dict)
+
+states_dict = {
+    'arg': 'states',
+    'name': "SystemsStateManager",
+    'directory_migration': True,
+    'singlefile_migration': False,
+    'migration_dir': os.path.join(migration_dir, "SystemsStateManager"),
+    'source_dir': os.path.join(program_data_dir, "National Instruments", "Skyline", "Data", "SystemsStateManager")
+}
+states = SimpleNamespace(**states_dict)
 
 # Capture and Restore argument constants
 capture_arg = 'capture'
