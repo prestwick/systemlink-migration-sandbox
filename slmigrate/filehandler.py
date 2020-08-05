@@ -11,7 +11,8 @@ def determine_migration_dir(service):
 
 def remove_dir(dir):
     if (os.path.isdir(dir)):
-        shutil.rmtree(dir)
+        # shutil.rmtree(dir)
+        dir_util.remove_tree(dir)
 
 
 def migrate_singlefile(service, action):
