@@ -11,8 +11,10 @@ def parse_arguments(args):
     parser.add_argument("--" + constants.opc.arg, "--opcua", "--opcuaclient", help="Migrate OPCUA sessions and certificates", action="store_true")
     parser.add_argument("--" + constants.fis.arg, "--file", "--files", help="Migrate ingested files", action="store_true")
     parser.add_argument("--" + constants.testmonitor.arg, "--test", "--tests", "--testmonitor", help="Migrate Test Monitor Data", action="store_true")
+    parser.add_argument("--" + constants.asset.arg, "--assets", help="Migrate asset utilitization and calibration data", action="store_true")
     parser.add_argument("--" + constants.alarmrule.arg, "--alarms", "--alarm", help="Migrate Tag alarm rules", action="store_true")
     parser.add_argument("--" + constants.migration_arg, "--directory", "--folder", help="Specify the directory used for migrated data", action="store", default=constants.migration_dir)
+    
     return parser
 
 

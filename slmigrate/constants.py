@@ -66,9 +66,16 @@ alarmrule_dict = {
     'name': "TagRuleEngine",
     'directory_migration': False,
     'singlefile_migration': False,
-    'service_to_restart': 'TagRuleEngine'
 }
 alarmrule = SimpleNamespace(**alarmrule_dict)
+
+asset_dict = {
+    'arg': 'asset',
+    'name': "AssetPerformanceManagement",
+    'directory_migration': False,
+    'singlefile_migration': False,
+}
+asset = SimpleNamespace(**asset_dict)
 
 # Capture and Restore argument constants
 capture_arg = 'capture'
