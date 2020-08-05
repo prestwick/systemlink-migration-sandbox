@@ -9,7 +9,7 @@ def determine_migration_dir(service):
     return migration_dir
 
 
-def check_migration_dir(dir):
+def remove_dir(dir):
     if (os.path.isdir(dir)):
         shutil.rmtree(dir)
 
@@ -19,7 +19,7 @@ def migrate_singlefile(service, action):
         return
     migration_dir = determine_migration_dir(service)
     if action == constants.capture_arg:
-        check_migration_dir(migration_dir)
+        remove_dir(migration_dir)
         os.mkdir(migration_dir)
         singlefile_full_path = os.path.join(constants.program_data_dir, service.singlefile_source_dir, service.singlefile_to_migrate)
         shutil.copy(singlefile_full_path, migration_dir)
@@ -33,7 +33,9 @@ def migrate_dir(service, action):
         return
     migratation_dir = determine_migration_dir(service)
     if action == constants.capture_arg:
-        check_migration_dir(migratation_dir)
+        remove_dir(migratation_dir)
         shutil.copytree(service.source_dir, migratation_dir)
     elif action == constants.restore_arg:
+        # do we just delete the destination directory? Otherwise we can't migrate states
+        remove_dir(service.source_dir)
         dir_util.copy_tree(migratation_dir, service.source_dir)

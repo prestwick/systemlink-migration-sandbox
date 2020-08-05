@@ -44,13 +44,20 @@ The following services can be migrated with this utility:
 - File Ingestion: `--file`
 - Test Monitor: `--test`
 - Asset Management: `--asset`
-    - Cannot migrate between 2020R1 and 2020R2 due to changes in database format
+    - Cannot be migrated between 2020R1 and 2020R2 servers
 - Repository: `--repo`
-- UserData: `--userdata`
+    - Feeds may require additional updates if servers used for migration have different domain names
+- User Data: `--userdata`
 - Notifications: `--notification`
-- States: `--states`
+
+    - Feeds may require additional updates if servers used for migration have different domain names
+    - Cannot be migrated between 2020R1 and 2020R2 servers
 
 ...with more on the way.
+
+#### Service Not Supported
+The following list of services is explicitly not supported because of issues that arose when developing and testing migrating the service that will require changes to the service rather than the migration utility to enable support. 
+- Cloud Connector
 
 ## Specifying a Migration Directory
 By default this tool will migrate data into the directory `C:\migrate`. During *capture* this directory is created. During *restore* this directory is expected to be present. The `--dir` argument allows for other directories and locations to be specified. For example:
