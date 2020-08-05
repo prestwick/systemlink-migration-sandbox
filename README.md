@@ -47,6 +47,8 @@ The following services can be migrated with this utility:
     - Cannot migrate between 2020R1 and 2020R2 due to changes in database format
 - Repository: `--repo`
 - UserData: `--userdata`
+- Notifications: `--notification`
+- States: `--states`
 
 ...with more on the way.
 
