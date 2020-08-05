@@ -45,6 +45,7 @@ The following services can be migrated with this utility:
 - Test Monitor: `--test`
 - Asset Management: `--asset`
     - Cannot migrate between 2020R1 and 2020R2 due to changes in database format
+- Repository: `--repo`
 
 ...with more on the way.
 

@@ -11,7 +11,7 @@ from test import test_constants
 
 def test_parse_arguments():
     parser = arghandler.parse_arguments(sys.argv[1:])
-    assert parser.parse_args(["--" + constants.tag.arg, "--" + constants.opc.arg, "--" + constants.testmonitor.arg, "--" + constants.alarmrule.arg, "--" + constants.opc.arg, "--" + constants.asset.arg])
+    assert parser.parse_args(["--" + constants.tag.arg, "--" + constants.opc.arg, "--" + constants.testmonitor.arg, "--" + constants.alarmrule.arg, "--" + constants.opc.arg, "--" + constants.asset.arg, "--" + constants.repository.arg])
 
 
 def test_double_action_args():
