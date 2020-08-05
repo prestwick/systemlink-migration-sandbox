@@ -10,8 +10,6 @@ def remove_readonly(func, path, excinfo):
     func(path)
 
 
-
-
 def determine_migration_dir(service):
     migration_dir = os.path.join(constants.migration_dir, service.name)
     return migration_dir
@@ -19,8 +17,6 @@ def determine_migration_dir(service):
 
 def remove_dir(dir):
     if (os.path.isdir(dir)):
-        # shutil.rmtree(dir)
-        # dir_util.remove_tree(dir)
         shutil.rmtree(dir, onerror=remove_readonly)
 
 
@@ -46,6 +42,5 @@ def migrate_dir(service, action):
         remove_dir(migratation_dir)
         shutil.copytree(service.source_dir, migratation_dir)
     elif action == constants.restore_arg:
-        # do we just delete the destination directory? Otherwise we can't migrate states
         remove_dir(service.source_dir)
         dir_util.copy_tree(migratation_dir, service.source_dir)

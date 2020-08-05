@@ -18,7 +18,6 @@ def parse_arguments(args):
     parser.add_argument("--" + constants.notification.arg, "--notifications", help="Migrate notifications strategies, templates, and groups", action="store_true")
     parser.add_argument("--" + constants.states.arg, "--state", help="Migrate system states", action="store_true")
     parser.add_argument("--" + constants.migration_arg, "--directory", "--folder", help="Specify the directory used for migrated data", action="store", default=constants.migration_dir)
-    
     return parser
 
 
