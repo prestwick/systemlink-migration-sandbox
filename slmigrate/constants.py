@@ -87,6 +87,14 @@ repository_dict = {
 }
 repository = SimpleNamespace(**repository_dict)
 
+userdata_dict = {
+    'arg': 'userdata',
+    'name': "UserData",
+    'directory_migration': False,
+    'singlefile_migration': False,
+}
+userdata = SimpleNamespace(**userdata_dict)
+
 # Capture and Restore argument constants
 capture_arg = 'capture'
 restore_arg = 'restore'
