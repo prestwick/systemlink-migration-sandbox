@@ -2,6 +2,14 @@ from slmigrate import constants
 from distutils import dir_util
 import os
 import shutil
+import stat
+
+
+def remove_readonly(func, path, excinfo):
+    os.chmod(path, stat.S_IWRITE)
+    func(path)
+
+
 
 
 def determine_migration_dir(service):
@@ -12,7 +20,8 @@ def determine_migration_dir(service):
 def remove_dir(dir):
     if (os.path.isdir(dir)):
         # shutil.rmtree(dir)
-        dir_util.remove_tree(dir)
+        # dir_util.remove_tree(dir)
+        shutil.rmtree(dir, onerror=remove_readonly)
 
 
 def migrate_singlefile(service, action):
