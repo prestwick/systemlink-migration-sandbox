@@ -81,6 +81,7 @@ repository_dict = {
     'arg': 'repository',
     'name': "Repository",
     'directory_migration': True,
+    'singlefile_migration': False,
     'migration_dir': os.path.join(migration_dir, "FileIngestion"),
     'source_dir': os.path.join(program_file_dir, "National Instruments", "Shared", "Web Services", "NI", "repo_webservice", "files")
 }
