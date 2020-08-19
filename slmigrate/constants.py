@@ -113,6 +113,18 @@ states_dict = {
 }
 states = SimpleNamespace(**states_dict)
 
+thdbbug_dict = {
+    'arg': 'thdbbug',
+    'name': 'TagHistorian',
+    'directory_migration': False,
+    'singlefile_migration': False,
+    # 'singlefile_migration_dir': os.path.join(migration_dir, "keyvaluedb"),
+    # 'singlefile_source_dir': os.path.join(program_data_dir, "National Instruments", "Skyline", "KeyValueDatabase"),
+    # 'singlefile_to_migrate': 'dump.rdb'
+}
+thdbbug = SimpleNamespace(**thdbbug_dict)
+
 # Capture and Restore argument constants
 capture_arg = 'capture'
 restore_arg = 'restore'
+thdbbug_arg = 'thdbbug'
