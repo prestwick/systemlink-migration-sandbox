@@ -44,7 +44,7 @@ def determine_migrate_action(arguments):
     elif arguments.restore:
         action = constants.restore_arg
     for arg in vars(arguments):
-        if getattr(arguments, arg) == constants.thdbbug_arg:
+        if getattr(arguments, arg) == constants.thdbbug.arg:
             service = getattr(constants, arg)
             services_to_migrate.append((service, action))
             return services_to_migrate

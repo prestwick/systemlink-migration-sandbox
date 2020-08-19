@@ -18,7 +18,6 @@ mongo_dump = os.path.join(program_file_dir, "National Instruments", "Shared", "S
 mongo_restore = os.path.join(program_file_dir, "National Instruments", "Shared", "Skyline", "NoSqlDatabase", "bin", "mongorestore.exe")
 mongod_exe = os.path.join(program_file_dir, "National Instruments", "Shared", "Skyline", "NoSqlDatabase", "bin", "mongod.exe")
 mongo_config = os.path.join(program_data_dir, "National Instruments", "Skyline", "NoSqlDatabase", "mongodb.conf")
-mongo_migration_dir = os.path.join(constants.migration_dir, "mongo-dump")
 service_config_dir = config_file = os.path.join(program_data_dir, "National Instruments", "Skyline", "Config")
 
 
