@@ -2,22 +2,13 @@ from slmigrate import constants
 import json
 import subprocess
 import os
+import pymongo
 
 
 def get_service_config(service, test=False):
     config_file = os.path.join(constants.service_config_dir, service.name + ".json")
     with open(config_file, encoding='utf-8-sig') as json_file:
         return json.load(json_file)
-
-
-def migrate_mongo_cmd(service, action, config):
-    mongo_migration_dir = os.path.join(constants.migration_dir, "mongo-dump")
-    mongo_dump_file = os.path.join(mongo_migration_dir, config[service.name]['Mongo.Database'])
-    if action == constants.capture_arg:
-        cmd_to_run = constants.mongo_dump + " --port " + str(config[service.name]['Mongo.Port']) + " --db " + config[service.name]['Mongo.Database'] + " --username " + config[service.name]['Mongo.User'] + " --password " + config[service.name]['Mongo.Password'] + " --out " + mongo_migration_dir + " --gzip"
-    if action == constants.restore_arg:
-        cmd_to_run = constants.mongo_restore + " --port " + str(config[service.name]['Mongo.Port']) + " --db " + config[service.name]['Mongo.Database'] + " --username " + config[service.name]['Mongo.User'] + " --password " + config[service.name]['Mongo.Password'] + " --gzip " + mongo_dump_file
-    subprocess.run(cmd_to_run)
 
 
 def start_mongo(mongod_exe, mongo_config):
@@ -27,3 +18,29 @@ def start_mongo(mongod_exe, mongo_config):
 
 def stop_mongo(proc):
     subprocess.Popen.kill(proc)
+
+
+def capture_migration(service, action, config):
+    if action != constants.capture_arg:
+        return
+    cmd_to_run = constants.mongo_dump + " --port " + str(config[service.name]['Mongo.Port']) + " --db " + config[service.name]['Mongo.Database'] + " --username " + config[service.name]['Mongo.User'] + " --password " + config[service.name]['Mongo.Password'] + " --out " + mongo_migration_dir + " --gzip"
+    subprocess.run(cmd_to_run)
+
+def restore_migration(service, action, config):
+    mongo_dump_file = os.path.join(constants.mongo_migration_dir, config[service.name]['Mongo.Database'])
+    if action != constants.restore_arg:
+        return
+    cmd_to_run = constants.mongo_restore + " --port " + str(config[service.name]['Mongo.Port']) + " --db " + config[service.name]['Mongo.Database'] + " --username " + config[service.name]['Mongo.User'] + " --password " + config[service.name]['Mongo.Password'] + " --gzip " + mongo_dump_file
+    subprocess.run(cmd_to_run)
+
+
+def migrate_within_instance(service, action, config):
+    if not action == constants.thdbbug.arg:
+        return
+    #TODO db.source_collection.find({condition}).forEach(function(d){ db.getSiblingDB('target_database')['target_collection'].insert(d); });
+
+
+def migrate_mongo_cmd(service, action, config):
+    migrate_within_instance(service, action, config)
+    capture_migration(service, action, config)
+    restore_migration(service, action, config)
