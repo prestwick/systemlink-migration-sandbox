@@ -43,7 +43,7 @@ def migrate_within_instance(service, action, config):
     # TODO build up DB string
     no_sql_config = get_service_config(constants.no_sql)
     # Below will alays defualt to authSource=admin
-    client = MongoClient(host=[no_sql_config[constants.no_sql.name]['Mongo.Host']], port=no_sql_config[constants.no_sql.name]['Mongo.Port'], username=no_sql_config[constants.no_sql.name]['Mongo.user'], password=no_sql_config[constants.no_sql.name]['Mongo.Password'])
+    client = MongoClient(host=[no_sql_config[constants.no_sql.name]['Mongo.Host']], port=no_sql_config[constants.no_sql.name]['Mongo.Port'], username=no_sql_config[constants.no_sql.name]['Mongo.User'], password=no_sql_config[constants.no_sql.name]['Mongo.Password'])
     admin_db = client.get_database(name='admin')
     taghistorian_db = client.get_database(name='nitaghistorian')
     admin_metadata_collection = admin_db.get_collection('metadata').find()
