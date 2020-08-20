@@ -45,11 +45,11 @@ def migrate_within_instance(service, action, config):
     no_sql_config = get_service_config(constants.no_sql)
     # Below will alays defualt to authSource=admin
     client = MongoClient(host=[no_sql_config[constants.no_sql.name]['Mongo.Host']], port=no_sql_config[constants.no_sql.name]['Mongo.Port'], username=no_sql_config[constants.no_sql.name]['Mongo.User'], password=no_sql_config[constants.no_sql.name]['Mongo.Password'])
-    admin_db = client.get_database(name='admin', bson.codec_options.CodecOptions(uuid_representation=bson.binary.4)
+    admin_db = client.get_database(name='admin', bson.codec_options.CodecOptions(uuid_representation=bson.binary.UUID_SUBTYPE)
 
 
 
-    taghistorian_db = client.get_database(name='nitaghistorian', bson.codec_options.CodecOptions(uuid_representation=bson.binary.4)
+    taghistorian_db = client.get_database(name='nitaghistorian', bson.codec_options.CodecOptions(uuid_representation=bson.binary.UUID_SUBTYPE)
     taghistorian_metadata_collection = taghistorian_db.get_collection('metadata')
     admin_metadata_collection = admin_db.get_collection('metadata').find()
     # TODO db.source_collection.find({condition}).forEach(function(d){ db.getSiblingDB('target_database')['target_collection'].insert(d); });
