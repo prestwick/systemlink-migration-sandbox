@@ -3,6 +3,7 @@ from types import SimpleNamespace
 
 # Global Path Constants
 migration_dir = os.path.join(os.path.abspath(os.sep), "migration")
+mongo_migration_dir = os.path.join(migration_dir, "mongo-dump")
 migration_arg = "dir"
 # no_sql_dump_dir = os.path.join(migration_dir, "mongo-dump")
 program_file_dir = os.environ.get("ProgramW6432")
@@ -18,6 +19,7 @@ mongo_dump = os.path.join(program_file_dir, "National Instruments", "Shared", "S
 mongo_restore = os.path.join(program_file_dir, "National Instruments", "Shared", "Skyline", "NoSqlDatabase", "bin", "mongorestore.exe")
 mongod_exe = os.path.join(program_file_dir, "National Instruments", "Shared", "Skyline", "NoSqlDatabase", "bin", "mongod.exe")
 mongo_config = os.path.join(program_data_dir, "National Instruments", "Skyline", "NoSqlDatabase", "mongodb.conf")
+
 service_config_dir = config_file = os.path.join(program_data_dir, "National Instruments", "Skyline", "Config")
 
 
