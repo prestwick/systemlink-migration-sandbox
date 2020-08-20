@@ -46,11 +46,12 @@ def migrate_within_instance(service, action, config):
     client = MongoClient(host=[no_sql_config[constants.no_sql.name]['Mongo.Host']], port=no_sql_config[constants.no_sql.name]['Mongo.Port'], username=no_sql_config[constants.no_sql.name]['Mongo.User'], password=no_sql_config[constants.no_sql.name]['Mongo.Password'])
     admin_db = client.get_database(name='admin')
     taghistorian_db = client.get_database(name='nitaghistorian')
+    # taghistorian_metadata_collection = taghistorian_db.
     admin_metadata_collection = admin_db.get_collection('metadata').find()
     # TODO db.source_collection.find({condition}).forEach(function(d){ db.getSiblingDB('target_database')['target_collection'].insert(d); });
 
     for document in admin_metadata_collection:
-        taghistorian_db.get_collection('metadata').insert(document)
+        taghistorian_db.get_collection('metadata').insert_one(document)
 
 
 
