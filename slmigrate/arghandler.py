@@ -59,4 +59,4 @@ def determine_migration_dir(arguments):
 
 
 def determine_source_db(arguments):
-    constants.source_db = getattr(arguments, constants.source_db)
+    constants.source_db = getattr(arguments, constants.source_db_arg)
