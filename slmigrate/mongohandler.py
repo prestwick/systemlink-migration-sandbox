@@ -29,10 +29,10 @@ def capture_migration(service, action, config):
 
 
 def restore_migration(service, action, config):
-    mongo_migration_dir = os.path.join(service.migration_dir, "mongo-dump")
-    mongo_dump_file = os.path.join(mongo_migration_dir, config[service.name]['Mongo.Database'])
     if action != constants.restore_arg:
         return
+    mongo_migration_dir = os.path.join(service.migration_dir, "mongo-dump")
+    mongo_dump_file = os.path.join(mongo_migration_dir, config[service.name]['Mongo.Database'])
     cmd_to_run = constants.mongo_restore + " --port " + str(config[service.name]['Mongo.Port']) + " --db " + config[service.name]['Mongo.Database'] + " --username " + config[service.name]['Mongo.User'] + " --password " + config[service.name]['Mongo.Password'] + " --gzip " + mongo_dump_file
     subprocess.run(cmd_to_run)
 
