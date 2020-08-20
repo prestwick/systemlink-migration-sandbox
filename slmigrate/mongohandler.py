@@ -54,17 +54,6 @@ def migrate_within_instance(service, action, config):
             print("Migrating " + str(document['_id']))
             destination_collection.insert_one(document)
 
-    # admin_metadata_collection = source_db.get_collection('metadata').find()
-    # taghistorian_db = client.get_database(name='nitaghistorian', codec_options=codec)
-    # taghistorian_metadata_collection = taghistorian_db.get_collection('metadata')
-
-    # for document in admin_metadata_collection:
-    #     print("Migrating " + document['_id'])
-    #     # thdocument['_id'] = document['_id']
-    #     # thdocument['_id'] = UUID(document['_id'])
-    #     # taghistorian_metadata_collection.insert_one(thdocument)
-    #     taghistorian_metadata_collection.insert_one(document)
-
 
 def migrate_mongo_cmd(service, action, config):
     migrate_within_instance(service, action, config)

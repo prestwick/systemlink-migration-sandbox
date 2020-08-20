@@ -18,7 +18,7 @@ def parse_arguments(args):
     parser.add_argument("--" + constants.notification.arg, "--notifications", help="Migrate notifications strategies, templates, and groups", action="store_true")
     parser.add_argument("--" + constants.states.arg, "--state", help="Migrate system states", action="store_true")
     parser.add_argument("--" + constants.migration_arg, "--directory", "--folder", help="Specify the directory used for migrated data", action="store", default=constants.migration_dir)
-    parser.add_argument("--" + constants.thdbbug.arg, help="Migrate tag history data to the correct MobgoDB to resolve issue introduced in SystemLink 2020R2 when using a remote Mongo instance. Use --sourcedb to specify a source database. admin is used if none is specfied", action="store_true")
+    parser.add_argument("--" + constants.thdbbug.arg, help="Migrate tag history data to the correct MongoDB to resolve an issue introduced in SystemLink 2020R2 when using a remote Mongo instance. Use --sourcedb to specify a source database. admin is used if none is specfied", action="store_true")
     parser.add_argument("--" + constants.source_db_arg, "--sourcedb", help="The name of the source directory when performing intra-databse migration", action="store", default=constants.source_db)
     return parser
 

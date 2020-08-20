@@ -131,7 +131,7 @@ thdbbug_dict = {
 }
 thdbbug = SimpleNamespace(**thdbbug_dict)
 
-# Capture and Restore argument constants
+# Argument constants
 capture_arg = 'capture'
 restore_arg = 'restore'
 source_db_arg = 'source_db'
