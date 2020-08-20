@@ -53,8 +53,8 @@ def migrate_within_instance(service, action, config):
     for document in admin_metadata_collection:
         thdocument = document
         print (document)
-        thdocument._id = document._id
-        taghistorian_db.get_collection('metadata').insert_one(thdocument)
+        thdocument['_id'] = document['_id']
+        taghistorian_metadata_collection.insert_one(thdocument)
 
 
 
