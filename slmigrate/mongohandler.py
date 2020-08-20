@@ -51,7 +51,7 @@ def migrate_within_instance(service, action, config):
         source_collection = source_db.get_collection(collection).find()
         destination_collection = destination_db.get_collection(collection)
         for document in source_collection:
-            print("Migrating " + document['_id'])
+            print("Migrating " + str(document['_id']))
             destination_collection.insert_one(document)
 
     # admin_metadata_collection = source_db.get_collection('metadata').find()
