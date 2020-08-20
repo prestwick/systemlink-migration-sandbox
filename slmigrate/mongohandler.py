@@ -41,7 +41,6 @@ def restore_migration(service, action, config):
 def migrate_within_instance(service, action, config):
     if not action == constants.thdbbug.arg:
         return
-    print("Migrate within instance " + str(service))
     codec = bson.codec_options.CodecOptions(uuid_representation=bson.binary.UUID_SUBTYPE)
     no_sql_config = get_service_config(constants.no_sql)
     client = MongoClient(host=[no_sql_config[constants.no_sql.name]['Mongo.Host']], port=no_sql_config[constants.no_sql.name]['Mongo.Port'], username=no_sql_config[constants.no_sql.name]['Mongo.User'], password=no_sql_config[constants.no_sql.name]['Mongo.Password'])
@@ -49,7 +48,7 @@ def migrate_within_instance(service, action, config):
     destination_db = client.get_database(name=service.destination_db, codec_options=codec)
 
     for collection in service.collections_to_migrate:
-        source_collection = source_db.get_collection(service.collections_to_migration[collection])
+        source_collection = source_db.get_collection(service.collections_to_migrate[collection])
         destination_collection = destination_db.get_collection(service.collections_to_migrate[collection])
         for document in source_collection:
             print("Migrating " + document['_id'])
