@@ -56,7 +56,7 @@ def test_capture_migrate_mongo_data():
     test_service = test_constants.test_service
     if os.path.isdir(constants.migration_dir):
         shutil.rmtree(constants.migration_dir)
-    config = mongohandler.get_service_config(test_service, False)
+    config = mongohandler.get_service_config(test_service)
     mongohandler.migrate_mongo_cmd(test_service, constants.capture_arg, config)
     dump_dir = os.path.join(constants.migration_dir, "local")
     mongohandler.stop_mongo(mongo_process)

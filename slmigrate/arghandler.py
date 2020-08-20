@@ -37,7 +37,7 @@ def handle_unallowed_args(arguments):
 def determine_migrate_action(arguments):
     services_to_migrate = []
     if arguments.thdbbug:
-        action = constants.thdbbug_arg
+        action = constants.thdbbug.arg
     if arguments.capture:
         action = constants.capture_arg
     elif arguments.restore:
