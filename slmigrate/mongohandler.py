@@ -54,7 +54,7 @@ def migrate_within_instance(service, action, config):
         thdocument = document
         print (document['_id'])
         # thdocument['_id'] = document['_id']
-        # thdocument.UUID(document['_id'])
+        thdocument['_id'] = UUID(document['_id'])
         # taghistorian_metadata_collection.insert_one(thdocument)
         taghistorian_metadata_collection.insert_one(document)
 
