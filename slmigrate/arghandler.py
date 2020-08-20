@@ -32,7 +32,6 @@ def handle_unallowed_args(arguments):
     if arguments.capture and arguments.restore:
         print("You cannot use --capture and --restore simultaneously.")
         exit()
-    
 
 
 def determine_migrate_action(arguments):

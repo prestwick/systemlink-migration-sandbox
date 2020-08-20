@@ -113,6 +113,12 @@ states_dict = {
 }
 states = SimpleNamespace(**states_dict)
 
+no_sql_dict = {
+    'name': 'NoSqlDatabase'
+
+}
+no_sql = SimpleNamespace(**no_sql_dict)
+
 thdbbug_dict = {
     'arg': 'thdbbug',
     'name': 'TagHistorian',
