@@ -3,6 +3,7 @@ import json
 import subprocess
 import os
 from pymongo import MongoClient
+import bson
 
 
 def get_service_config(service):
@@ -44,17 +45,20 @@ def migrate_within_instance(service, action, config):
     no_sql_config = get_service_config(constants.no_sql)
     # Below will alays defualt to authSource=admin
     client = MongoClient(host=[no_sql_config[constants.no_sql.name]['Mongo.Host']], port=no_sql_config[constants.no_sql.name]['Mongo.Port'], username=no_sql_config[constants.no_sql.name]['Mongo.User'], password=no_sql_config[constants.no_sql.name]['Mongo.Password'])
-    admin_db = client.get_database(name='admin')
-    taghistorian_db = client.get_database(name='nitaghistorian')
+    admin_db = client.get_database(name='admin', bson.codec_options.CodecOptions(uuid_representation=bson.binary.4)
+
+
+
+    taghistorian_db = client.get_database(name='nitaghistorian', bson.codec_options.CodecOptions(uuid_representation=bson.binary.4)
     taghistorian_metadata_collection = taghistorian_db.get_collection('metadata')
     admin_metadata_collection = admin_db.get_collection('metadata').find()
     # TODO db.source_collection.find({condition}).forEach(function(d){ db.getSiblingDB('target_database')['target_collection'].insert(d); });
 
     for document in admin_metadata_collection:
-        thdocument = document
+        # thdocument = document
         print (document['_id'])
         # thdocument['_id'] = document['_id']
-        thdocument['_id'] = UUID(document['_id'])
+        # thdocument['_id'] = UUID(document['_id'])
         # taghistorian_metadata_collection.insert_one(thdocument)
         taghistorian_metadata_collection.insert_one(document)
 
