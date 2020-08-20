@@ -51,9 +51,10 @@ def migrate_within_instance(service, action, config):
     # TODO db.source_collection.find({condition}).forEach(function(d){ db.getSiblingDB('target_database')['target_collection'].insert(d); });
 
     for document in admin_metadata_collection:
-        # thdocument = document
-        # print (document)
+        thdocument = document
+        print (document['_id'])
         # thdocument['_id'] = document['_id']
+        # thdocument.UUID(document['_id'])
         # taghistorian_metadata_collection.insert_one(thdocument)
         taghistorian_metadata_collection.insert_one(document)
 
