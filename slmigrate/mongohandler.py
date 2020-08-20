@@ -41,13 +41,10 @@ def restore_migration(service, action, config):
 def migrate_within_instance(service, action, config):
     if not action == constants.thdbbug.arg:
         return
-    # TODO build up DB string
+    print("Migrate within instance " + service)
     codec = bson.codec_options.CodecOptions(uuid_representation=bson.binary.UUID_SUBTYPE)
-
     no_sql_config = get_service_config(constants.no_sql)
-    # Below will alays defualt to authSource=admin
     client = MongoClient(host=[no_sql_config[constants.no_sql.name]['Mongo.Host']], port=no_sql_config[constants.no_sql.name]['Mongo.Port'], username=no_sql_config[constants.no_sql.name]['Mongo.User'], password=no_sql_config[constants.no_sql.name]['Mongo.Password'])
-    # source_db = client.get_database(name='admin', codec_options=codec)
     source_db = client.get_database(name=constants.source_db, codec_options=codec)
     destination_db = client.get_database(name=service.destination_db, codec_options=codec)
 
