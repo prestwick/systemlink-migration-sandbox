@@ -124,12 +124,15 @@ thdbbug_dict = {
     'name': 'TagHistorian',
     'directory_migration': False,
     'singlefile_migration': False,
-    # 'singlefile_migration_dir': os.path.join(migration_dir, "keyvaluedb"),
-    # 'singlefile_source_dir': os.path.join(program_data_dir, "National Instruments", "Skyline", "KeyValueDatabase"),
-    # 'singlefile_to_migrate': 'dump.rdb'
+    'intradb_migration': True,
+    'collections_to_migrate': ['metadata', 'values'],
+    'source_db': 'admin',
+    'destination_db': 'nitaghistorian'
 }
 thdbbug = SimpleNamespace(**thdbbug_dict)
 
 # Capture and Restore argument constants
 capture_arg = 'capture'
 restore_arg = 'restore'
+source_db_arg = 'source_db'
+source_db = 'admin'

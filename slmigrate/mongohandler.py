@@ -42,23 +42,32 @@ def migrate_within_instance(service, action, config):
     if not action == constants.thdbbug.arg:
         return
     # TODO build up DB string
+    codec = bson.codec_options.CodecOptions(uuid_representation=bson.binary.UUID_SUBTYPE)
+
     no_sql_config = get_service_config(constants.no_sql)
     # Below will alays defualt to authSource=admin
     client = MongoClient(host=[no_sql_config[constants.no_sql.name]['Mongo.Host']], port=no_sql_config[constants.no_sql.name]['Mongo.Port'], username=no_sql_config[constants.no_sql.name]['Mongo.User'], password=no_sql_config[constants.no_sql.name]['Mongo.Password'])
-    admin_db = client.get_database(name='admin', codec_options=bson.codec_options.CodecOptions(uuid_representation=bson.binary.UUID_SUBTYPE))
+    # source_db = client.get_database(name='admin', codec_options=codec)
+    source_db = client.get_database(name=constants.source_db, codec_options=codec)
+    destination_db = client.get_database(name=service.destination_db, codec_options=codec)
 
-    taghistorian_db = client.get_database(name='nitaghistorian', codec_options=bson.codec_options.CodecOptions(uuid_representation=bson.binary.UUID_SUBTYPE))
-    taghistorian_metadata_collection = taghistorian_db.get_collection('metadata')
-    admin_metadata_collection = admin_db.get_collection('metadata').find()
-    # TODO db.source_collection.find({condition}).forEach(function(d){ db.getSiblingDB('target_database')['target_collection'].insert(d); });
+    for collection in service.collections_to_migrate:
+        source_collection = source_db.get_collection(service.collections_to_migration[collection])
+        destination_collection = destination_db.get_collection(service.collections_to_migrate[collection])
+        for document in source_collection:
+            print("Migrating " + document['_id'])
+            destination_collection.insert_one(document)
 
-    for document in admin_metadata_collection:
-        # thdocument = document
-        print(document['_id'])
-        # thdocument['_id'] = document['_id']
-        # thdocument['_id'] = UUID(document['_id'])
-        # taghistorian_metadata_collection.insert_one(thdocument)
-        taghistorian_metadata_collection.insert_one(document)
+    # admin_metadata_collection = source_db.get_collection('metadata').find()
+    # taghistorian_db = client.get_database(name='nitaghistorian', codec_options=codec)
+    # taghistorian_metadata_collection = taghistorian_db.get_collection('metadata')
+
+    # for document in admin_metadata_collection:
+    #     print("Migrating " + document['_id'])
+    #     # thdocument['_id'] = document['_id']
+    #     # thdocument['_id'] = UUID(document['_id'])
+    #     # taghistorian_metadata_collection.insert_one(thdocument)
+    #     taghistorian_metadata_collection.insert_one(document)
 
 
 def migrate_mongo_cmd(service, action, config):

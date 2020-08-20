@@ -18,7 +18,8 @@ def parse_arguments(args):
     parser.add_argument("--" + constants.notification.arg, "--notifications", help="Migrate notifications strategies, templates, and groups", action="store_true")
     parser.add_argument("--" + constants.states.arg, "--state", help="Migrate system states", action="store_true")
     parser.add_argument("--" + constants.migration_arg, "--directory", "--folder", help="Specify the directory used for migrated data", action="store", default=constants.migration_dir)
-    parser.add_argument("--" + constants.thdbbug.arg, help="Migrate tag history data to the correct MobgoDB to resolve issue introduced in SystemLink 2020R2 when using a remote Mongo instance", action="store_true")
+    parser.add_argument("--" + constants.thdbbug.arg, help="Migrate tag history data to the correct MobgoDB to resolve issue introduced in SystemLink 2020R2 when using a remote Mongo instance. Use --sourcedb to specify a source database. admin is used if none is specfied", action="store_true")
+    parser.add_argument("--" + constants.source_db_arg, "--sourcedb", help="The name of the source directory when performing intra-databse migration", action="store", default=constants.source_db)
     return parser
 
 
@@ -47,7 +48,7 @@ def determine_migrate_action(arguments):
             service = getattr(constants, arg)
             services_to_migrate.append((service, action))
             return services_to_migrate
-        if (getattr(arguments, arg) and not ((arg == constants.capture_arg) or (arg == constants.restore_arg) or (arg == constants.migration_arg))):
+        if (getattr(arguments, arg) and not ((arg == constants.capture_arg) or (arg == constants.restore_arg) or (arg == constants.migration_arg) or (arg == constants.source_db_arg))):
             service = getattr(constants, arg)
             services_to_migrate.append((service, action))
     return services_to_migrate
@@ -55,3 +56,7 @@ def determine_migrate_action(arguments):
 
 def determine_migration_dir(arguments):
     constants.migration_dir = getattr(arguments, constants.migration_arg)
+
+
+def determine_source_db(arguments):
+    constants.source_db = getattr(arguments, constants.source_db)
