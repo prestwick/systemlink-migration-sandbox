@@ -48,7 +48,7 @@ def migrate_within_instance(service, action, config):
     destination_db = client.get_database(name=service.destination_db, codec_options=codec)
 
     for collection in service.collections_to_migrate:
-        source_collection = source_db.get_collection(collection)
+        source_collection = source_db.get_collection(collection).find()
         destination_collection = destination_db.get_collection(collection)
         for document in source_collection:
             print("Migrating " + document['_id'])
