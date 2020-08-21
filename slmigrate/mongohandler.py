@@ -57,6 +57,9 @@ def migrate_within_instance(service, action, config):
 
 
 def migrate_mongo_cmd(service, action, config):
-    migrate_within_instance(service, action, config)
-    capture_migration(service, action, config)
-    restore_migration(service, action, config)
+    if action == constants.thdbbug.arg:
+        migrate_within_instance(service, action, config)
+    if action == constants.capture_arg:
+        capture_migration(service, action, config)
+    if action == constants.restore_arg:
+        restore_migration(service, action, config)
