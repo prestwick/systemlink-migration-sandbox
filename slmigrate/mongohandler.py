@@ -3,6 +3,7 @@ import json
 import subprocess
 import os
 from pymongo import MongoClient
+from pymongo import errors as pyerr
 import bson
 
 
@@ -52,8 +53,11 @@ def migrate_within_instance(service, action, config):
         source_collection = source_db.get_collection(collection).find()
         destination_collection = destination_db.get_collection(collection)
         for document in source_collection:
-            print("Migrating " + str(document['_id']))
-            destination_collection.insert_one(document)
+            try:
+                print("Migrating " + str(document['_id']))
+                destination_collection.insert_one(document)
+            except pyerr.DuplicateKeyError:
+                print("Docuement " + str(document['_id']) + " already exists. Skipping")
 
 
 def migrate_mongo_cmd(service, action, config):
