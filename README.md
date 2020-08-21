@@ -68,6 +68,15 @@ py systemlinkmigrate.py --capture --tag --dir="C:\migrate_8-3-2020
 ````
 These arguments will capture tag and tag history data and store them in the directory `C:\migrate_8-3-2020`
 
+## Migrating tag history to nitaghistorian database
+Due to a bug introduced in SystemLink 2020R2 it is possible for tag history data to be stored in the incorrect database within the MongoDB instance. **This bug only affects environments where a remote MongoDB server is used.** To determine if you are in this state connect a MongoShell or visual database tool such as [Mongo Compase](https://www.mongodb.com/products/compass) to your Mongo instance and check if the collections `metadata` and `values` are in the default authentication database (typically the `admin` database).
+- Use the `--thdbbug` argument to correct this. No other migration arguments may be paired with this argument. 
+- If you are using a database other than `admin` you can specify this with the `--sourcedb` argument For example
+```bash
+py systmelinkmigrate.py --thdbbug --sourcedb myadmindb
+```
+
+
 
 # Extending systemlinkmigrate.py
 The `systemlinkmigrate.py` utility can be extended to migrate services whose data is within MongoDB, a single file, or directory. For data not covered by these additional changes may be needed that are not covered in this README. 
