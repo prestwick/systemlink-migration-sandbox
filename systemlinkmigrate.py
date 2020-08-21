@@ -9,6 +9,7 @@ if __name__ == "__main__":
     arguments = arghandler.parse_arguments(sys.argv[1:]).parse_args()
     arghandler.handle_unallowed_args(arguments)
     arghandler.determine_migration_dir(arguments)
+    arghandler.determine_source_db(arguments)
     servicemgrhandler.stop_all_sl_services()
     mongo_proc = mongohandler.start_mongo(constants.mongod_exe, constants.mongo_config)
     services_to_migrate = arghandler.determine_migrate_action(arguments)
