@@ -37,6 +37,14 @@ def restore_migration(service, action, config):
     subprocess.run(cmd_to_run)
 
 
+def merge_metadata():
+    pass
+
+
+def merge_values():
+    pass
+
+
 def migrate_within_instance(service, action, config):
     if not action == constants.thdbbug.arg:
         return
