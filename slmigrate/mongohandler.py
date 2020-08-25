@@ -56,7 +56,7 @@ def identify_metadata_conflict(destination_collection, source_document):
     destination_query = {'$and': [{'workspace': source_document['workspace']}, {'path': source_document['path']}]}
     # source_document = source_collection.find_one(source_query)
     destination_document = destination_collection.find_one(destination_query)
-    print("Destination document=" + str(destination_document['_id']))
+    
 
     # if source_collection.find_one(source_query) == destination_collection.find_one(destination_query):
     # if source_document == destination_document:
@@ -64,6 +64,7 @@ def identify_metadata_conflict(destination_collection, source_document):
     # return SimpleNamespace(**{'destination_document': destination_document, 'field_value': field_value})
 
     if destination_document:
+        print("Destination document=" + str(destination_document['_id']))
         return SimpleNamespace(**{'source_id': source_document['_id'], 'destination_id': destination_document['_id']})
     else:
         return None
