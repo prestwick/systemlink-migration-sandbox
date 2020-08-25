@@ -70,7 +70,7 @@ def identify_metadata_conflict(destination_collection, source_document):
 
 def merge_history_document(source_id, destination_id, destination_db):
     destination_collection = destination_db.get_collection('values')
-    destination_collection.update_one({'metadataId': source_id}, {'metadataId': destination_id})
+    destination_collection.update_one({'metadataId': source_id}, {'$set': {'metadataId': destination_id}})
 
 
 def migrate_metadata_collection(source_db, destination_db):
@@ -85,6 +85,7 @@ def migrate_metadata_collection(source_db, destination_db):
     for document in source_collection_iterable:
         conflict = identify_metadata_conflict(destination_collection, document)
         if conflict:
+            print("Conflict Found! " + "source_id=" + conflict.source_id + " destination_id=" + conflict.destination_id)
             merge_history_document(conflict.source_id, conflict.destination_id, destination_db)
         else:
             migrate_document(destination_collection, document)
