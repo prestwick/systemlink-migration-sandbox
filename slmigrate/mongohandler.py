@@ -56,6 +56,7 @@ def identify_metadata_conflict(destination_collection, source_document):
     destination_query = {'$and': [{'workspace': source_document['workspace']}, {'path': source_document['path']}]}
     # source_document = source_collection.find_one(source_query)
     destination_document = destination_collection.find_one(destination_query)
+    print("Destination document=" + str(destination_document['_id']))
 
     # if source_collection.find_one(source_query) == destination_collection.find_one(destination_query):
     # if source_document == destination_document:
@@ -85,7 +86,7 @@ def migrate_metadata_collection(source_db, destination_db):
     for document in source_collection_iterable:
         conflict = identify_metadata_conflict(destination_collection, document)
         if conflict:
-            print("Conflict Found! " + "source_id=" + conflict.source_id + " destination_id=" + conflict.destination_id)
+            print("Conflict Found! " + "source_id=" + str(conflict.source_id) + " destination_id=" + str(conflict.destination_id))
             merge_history_document(conflict.source_id, conflict.destination_id, destination_db)
         else:
             migrate_document(destination_collection, document)
