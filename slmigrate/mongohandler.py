@@ -89,6 +89,7 @@ def migrate_metadata_collection(source_db, destination_db):
             print("Conflict Found! " + "source_id=" + str(conflict.source_id) + " destination_id=" + str(conflict.destination_id))
             merge_history_document(conflict.source_id, conflict.destination_id, destination_db)
         else:
+            print('Migrating metadata document=' + str(document['_id'])
             migrate_document(destination_collection, document)
 
 
