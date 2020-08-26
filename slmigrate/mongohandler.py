@@ -88,7 +88,7 @@ def check_merge_history_readiness(destination_db):
     # look for fields that should be set when Org modeling is present. If they are missing exit.
     collection_name = 'metadata'
     destination_collection = destination_db.get_collection(collection_name)
-    if destination_collection.find({'workspace': {'$exists': True}}):
+    if destination_collection.find({'workspace': {'$exists': False}}).count() > 0:
         print("Database is not ready for migration. Update the connection string in C:\\ProgramData\\National Instruments\\Skyline\\Config\\TagHistorian.json to point to the nitaghistorian database in your MongoDB instance and restart Service Manager. Please see TODODLINK HERE for more detail")
         exit()
 
