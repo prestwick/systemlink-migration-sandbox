@@ -84,6 +84,15 @@ def migrate_values_collection(source_db, destination_db):
         migrate_document(destination_collection, document)
 
 
+def check_merge_history_readiness(destination_db):
+    # look for fields that should be set when Org modeling is present. If they are missing exit.
+    collection_name = 'metadata'
+    destination_collection = destination_db.get_collection(collection_name)
+    if destination_collection.find({'workspace': {'$exists': True}}):
+        print("Database is not ready for migration. Update the connection string in C:\\ProgramData\\National Instruments\\Skyline\\Config\\TagHistorian.json to point to the nitaghistorian database in your MongoDB instance and restart Service Manager. Please see TODODLINK HERE for more detail")
+        exit()
+
+
 def migrate_within_instance(service, action, config):
     if not action == constants.thdbbug.arg:
         return
@@ -92,6 +101,7 @@ def migrate_within_instance(service, action, config):
     client = MongoClient(host=[no_sql_config[constants.no_sql.name]['Mongo.Host']], port=no_sql_config[constants.no_sql.name]['Mongo.Port'], username=no_sql_config[constants.no_sql.name]['Mongo.User'], password=no_sql_config[constants.no_sql.name]['Mongo.Password'])
     source_db = client.get_database(name=service.source_db, codec_options=codec)
     destination_db = client.get_database(name=service.destination_db, codec_options=codec)
+    check_merge_history_readiness(destination_db)
     migrate_values_collection(source_db, destination_db)
     migrate_metadata_collection(source_db, destination_db)
 
