@@ -49,7 +49,7 @@ def migrate_document(destination_collection, document):
 def identify_metadata_conflict(destination_collection, source_document):
     destination_query = {'$and': [{'workspace': source_document['workspace']}, {'path': source_document['path']}]}
     destination_document = destination_collection.find_one(destination_query)
-    if destination_document.count() > 0:
+    if destination_document:
         return SimpleNamespace(**{'source_id': source_document['_id'], 'destination_id': destination_document['_id']})
     else:
         return None
