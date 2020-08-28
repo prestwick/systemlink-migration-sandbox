@@ -65,13 +65,13 @@ def migrate_metadata_collection(source_db, destination_db):
     source_collection = source_db.get_collection(collection_name)
     source_collection_iterable = source_collection.find()
     destination_collection = destination_db.get_collection(collection_name)
-    for document in source_collection_iterable:
-        conflict = identify_metadata_conflict(destination_collection, document)
+    for source_document in source_collection_iterable:
+        conflict = identify_metadata_conflict(destination_collection, source_document)
         if conflict:
             print("Conflict Found! " + "source_id=" + str(conflict.source_id) + " destination_id=" + str(conflict.destination_id))
             merge_history_document(conflict.source_id, conflict.destination_id, destination_db)
         else:
-            migrate_document(destination_collection, document)
+            migrate_document(destination_collection, source_document)
 
 
 def migrate_values_collection(source_db, destination_db):
