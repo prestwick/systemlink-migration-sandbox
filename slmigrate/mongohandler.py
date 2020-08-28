@@ -43,7 +43,7 @@ def migrate_document(destination_collection, document):
         print("Migrating " + str(document['_id']))
         destination_collection.insert_one(document)
     except pyerr.DuplicateKeyError:
-        print("Docuement " + str(document['_id']) + " already exists. Skipping")
+        print("Document " + str(document['_id']) + " already exists. Skipping")
 
 
 def identify_metadata_conflict(destination_collection, source_document):
