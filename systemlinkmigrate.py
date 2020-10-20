@@ -6,8 +6,7 @@ from slmigrate import mongohandler, filehandler, arghandler, servicemgrhandler, 
 
 # Main
 if __name__ == "__main__":
-    arguments = arghandler.parse_arguments(sys.argv[1:]).parse_args()
-    arghandler.handle_unallowed_args(arguments)
+    arguments = arghandler.parse_arguments().parse_args()
     arghandler.determine_migration_dir(arguments)
     arghandler.determine_source_db(arguments)
     servicemgrhandler.stop_all_sl_services()
