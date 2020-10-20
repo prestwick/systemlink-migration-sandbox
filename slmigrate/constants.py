@@ -21,6 +21,8 @@ mongo_config = os.path.join(program_data_dir, "National Instruments", "Skyline",
 
 service_config_dir = config_file = os.path.join(program_data_dir, "National Instruments", "Skyline", "Config")
 
+# Global constants for argparse
+subparser_storage_attr = 'action'
 
 # Service Dictionaries
 tag_dict = {

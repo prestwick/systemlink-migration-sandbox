@@ -20,10 +20,10 @@ def parse_arguments():
     parent_parser.add_argument("--" + constants.migration_arg, "--directory", "--folder", help="Specify the directory used for migrated data", action="store", default=constants.migration_dir)
     parent_parser.add_argument("--" + constants.source_db_arg, "--sourcedb", help="The name of the source directory when performing intra-databse migration", action="store", default=constants.source_db)
 
-    commands = parser.add_subparsers(dest='action')
+    commands = parser.add_subparsers(dest=constants.subparser_storage_attr)
     commands.add_parser(constants.capture_arg, help="capture is used to pull data and settings off SystemLink server", parents=[parent_parser])
     commands.add_parser(constants.restore_arg, help="restore is used to push data and settings to a clean SystemLink server. ", parents=[parent_parser])
-  
+
     commands.add_parser(constants.thdbbug.arg, help="Migrate tag history data to the correct MongoDB to resolve an issue introduced in SystemLink 2020R2 when using a remote Mongo instance. Use --sourcedb to specify a source database. admin is used if none is specfied",)
 
     return parser
@@ -33,7 +33,7 @@ def determine_migrate_action(arguments):
     services_to_migrate = []
     action = arguments.action
     for arg in vars(arguments):
-        if (getattr(arguments, arg) and not (arg == 'action') and not (arg == constants.source_db_arg) and not (arg == constants.migration_arg)):
+        if (getattr(arguments, arg) and not (arg == constants.subparser_storage_attr) and not (arg == constants.source_db_arg) and not (arg == constants.migration_arg)):
             service = getattr(constants, arg)
             services_to_migrate.append((service, action))
 
