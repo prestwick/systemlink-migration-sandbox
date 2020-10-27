@@ -10,38 +10,54 @@ from test import test_constants
 
 
 def test_parse_arguments():
-    parser = arghandler.parse_arguments(sys.argv[1:])
-    assert parser.parse_args(["--" + constants.tag.arg, "--" + constants.opc.arg, "--" + constants.testmonitor.arg, "--" + constants.alarmrule.arg, "--" + constants.opc.arg, "--" + constants.asset.arg, "--" + constants.repository.arg, "--" + constants.userdata.arg, "--" + constants.notification.arg, "--" + constants.states.arg])
+    parser = arghandler.parse_arguments()
+    assert parser.parse_args([constants.capture_arg,
+                              "--" + constants.tag.arg,
+                              "--" + constants.opc.arg,
+                              "--" + constants.testmonitor.arg,
+                              "--" + constants.alarmrule.arg,
+                              "--" + constants.opc.arg,
+                              "--" + constants.asset.arg,
+                              "--" + constants.repository.arg,
+                              "--" + constants.userdata.arg,
+                              "--" + constants.notification.arg,
+                              "--" + constants.states.arg])
 
 
 def test_double_action_args():
-    parser = arghandler.parse_arguments(sys.argv[1:])
-    arguments = parser.parse_args(["--" + constants.capture_arg, "--" + constants.restore_arg])
+    parser = arghandler.parse_arguments()
     with pytest.raises(SystemExit) as pytest_wrapped_e:
-        arghandler.handle_unallowed_args(arguments)
+        parser.parse_args([constants.capture_arg, constants.restore_arg])
     assert pytest_wrapped_e.type == SystemExit
 
 
 def test_no_action_args():
-    parser = arghandler.parse_arguments(2)
-    arguments = parser.parse_args(["--" + constants.tag.arg])
+    parser = arghandler.parse_arguments()
     with pytest.raises(SystemExit) as pytest_wrapped_e:
-        arghandler.handle_unallowed_args(arguments)
+        parser.parse_args(["--" + constants.tag.arg])
     assert pytest_wrapped_e.type == SystemExit
 
 
 def test_determine_migrate_action_capture():
     test_service_tuple = [(constants.tag, constants.capture_arg)]
-    parser = arghandler.parse_arguments(sys.argv[1:])
-    arguments = parser.parse_args(["--" + constants.tag.arg, "--" + constants.capture_arg])
+    parser = arghandler.parse_arguments()
+    arguments = parser.parse_args([constants.capture_arg, "--" + constants.tag.arg])
     services_to_migrate = arghandler.determine_migrate_action(arguments)
     assert services_to_migrate == test_service_tuple
 
 
 def test_determine_migrate_action_restore():
-    test_service_tuple = [(constants.opc, constants.capture_arg)]
-    parser = arghandler.parse_arguments(sys.argv[1:])
-    arguments = parser.parse_args(["--" + constants.opc.arg, "--" + constants.capture_arg])
+    test_service_tuple = [(constants.opc, constants.restore_arg)]
+    parser = arghandler.parse_arguments()
+    arguments = parser.parse_args([constants.restore_arg, "--" + constants.opc.arg])
+    services_to_migrate = arghandler.determine_migrate_action(arguments)
+    assert services_to_migrate == test_service_tuple
+
+
+def test_determine_migrate_action_thdbbg():
+    test_service_tuple = [(constants.tag, constants.thdbbug.arg)]
+    parser = arghandler.parse_arguments()
+    arguments = parser.parse_args([constants.thdbbug.arg])
     services_to_migrate = arghandler.determine_migrate_action(arguments)
     assert services_to_migrate == test_service_tuple
 
@@ -102,3 +118,4 @@ def test_capture_migrate_singlefile():
     assert os.path.isfile(os.path.join(test.migration_dir, "demofile2.txt"))
     shutil.rmtree(test.source_dir)
     shutil.rmtree(constants.migration_dir)
+
