@@ -19,6 +19,20 @@ def migration_dir_exists(dir):
     return os.path.isdir(dir)
 
 
+def service_restore_singlefile_exists(service):
+    if not service.singlefile_migration:
+        return True
+    else:
+        return os.path.isfile(os.path.join(determine_migration_dir(service), service.singlefile_to_migrate))
+
+
+def service_restore_dir_exists(service):
+    if not service.directory_migration:
+        return True
+    else:
+        return os.path.isdir(determine_migration_dir(service))
+
+
 def remove_dir(dir):
     if (os.path.isdir(dir)):
         shutil.rmtree(dir, onerror=remove_readonly)
@@ -35,8 +49,6 @@ def migrate_singlefile(service, action):
         shutil.copy(singlefile_full_path, migration_dir)
     elif action == constants.restore_arg:
         singlefile_full_path = os.path.join(migration_dir, service.singlefile_to_migrate)
-        if not os.path.isfile(singlefile_full_path):
-            raise FileNotFoundError
         shutil.copy(singlefile_full_path, service.singlefile_source_dir)
 
 
@@ -48,7 +60,5 @@ def migrate_dir(service, action):
         remove_dir(migration_dir)
         shutil.copytree(service.source_dir, migration_dir)
     elif action == constants.restore_arg:
-        if not os.path.isdir(migration_dir):
-            raise FileNotFoundError
         remove_dir(service.source_dir)
         dir_util.copy_tree(migration_dir, service.source_dir)

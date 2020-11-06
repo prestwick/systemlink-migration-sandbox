@@ -10,6 +10,8 @@ mongo_restore = os.path.join(root_dir, "MongoDB", "bin", "mongod.exe", "mongores
 service_config_dir = os.path.join(os.getcwd(), "test")
 migration_dir = os.path.join(os.path.abspath(os.sep), "migration_test")
 
+migration_cmd = "systemlinkmigrate.py"
+
 test_dict = {
     'arg': 'test_service',
     'name': "local",
