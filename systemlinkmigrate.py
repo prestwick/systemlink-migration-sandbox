@@ -25,6 +25,6 @@ if __name__ == "__main__":
             filehandler.migrate_dir(service, action)
             filehandler.migrate_singlefile(service, action)
         except FileNotFoundError:
-            argparser.error("Service migration files do not exist for " + service.name)
+            print(service.name + " " + action + ": missing migration files")
     mongohandler.stop_mongo(mongo_proc)
     servicemgrhandler.start_all_sl_services()
