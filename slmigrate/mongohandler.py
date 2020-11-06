@@ -34,8 +34,6 @@ def restore_migration(service, action, config):
     if action != constants.restore_arg:
         return
     mongo_dump_file = os.path.join(constants.mongo_migration_dir, config[service.name]['Mongo.Database'])
-    if not os.path.isdir(mongo_dump_file):
-        raise FileNotFoundError
     cmd_to_run = constants.mongo_restore + " --port " + str(config[service.name]['Mongo.Port']) + " --db " + config[service.name]['Mongo.Database'] + " --username " + config[service.name]['Mongo.User'] + " --password " + config[service.name]['Mongo.Password'] + " --gzip " + mongo_dump_file
     subprocess.run(cmd_to_run)
 
