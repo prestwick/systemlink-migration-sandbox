@@ -20,8 +20,8 @@ if __name__ == "__main__":
         action = service_to_migrate[1]
         print(service.name + " " + action + " migration called")
         config = mongohandler.get_service_config(service)
-        mongohandler.migrate_mongo_cmd(service, action, config)
         try:
+            mongohandler.migrate_mongo_cmd(service, action, config)
             filehandler.migrate_dir(service, action)
             filehandler.migrate_singlefile(service, action)
         except FileNotFoundError:
