@@ -15,10 +15,12 @@ def main():
         argparser.error(constants.migration_dir + " does not exist")
     for service_to_migrate in services_to_migrate:
         service = service_to_migrate[0]
-        if not filehandler.service_restore_singlefile_exists(service):
-            argparser.error(service.name + ": " + os.path.join(filehandler.determine_migration_dir(service), service.singlefile_to_migrate) + " does not exist")
-        if not filehandler.service_restore_dir_exists(service):
-            argparser.error(service.name + ": " + filehandler.determine_migration_dir(service) + " does not exist")
+        action = service_to_migrate[1]
+        if action == constants.restore_arg:
+            if not filehandler.service_restore_singlefile_exists(service):
+                argparser.error(service.name + ": " + os.path.join(filehandler.determine_migration_dir(service), service.singlefile_to_migrate) + " does not exist")
+            if not filehandler.service_restore_dir_exists(service):
+                argparser.error(service.name + ": " + filehandler.determine_migration_dir(service) + " does not exist")
     arghandler.determine_source_db(arguments)
     servicemgrhandler.stop_all_sl_services()
     mongo_proc = mongohandler.start_mongo(constants.mongod_exe, constants.mongo_config)
