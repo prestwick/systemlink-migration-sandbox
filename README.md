@@ -28,7 +28,7 @@ py systemlinkmigrate.py restore --tags
 Running `systemlinkmigrate.py` with the above arguments will restore tag and tag history data from the directory `C:\migration`.
 
 ### Capture and Restore
-The `capture` and `restore` actions determine the directionality of the migration. The `capture` action is used when migrating data FROM an existing SystemLink server. The `restor` action is used when migrating data TO a new SystemLink server. Both actions cannot be used simultaneously. 
+The `capture` and `restore` actions determine the directionality of the migration. The `capture` action is used when migrating data FROM an existing SystemLink server. The `restore` action is used when migrating data TO a new SystemLink server. Both actions cannot be used simultaneously. 
 
 ### Specifying services to migrate
 To migrate the data associated with a SystemLink service you must specify the service as an argument. Multiple services may be captured or restored by providing multiple arguments; e.g:
