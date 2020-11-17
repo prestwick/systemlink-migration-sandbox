@@ -70,7 +70,7 @@ These arguments will capture tag and tag history data and store them in the dire
 
 ## Migrating tag history to nitaghistorian database
 Due to a bug introduced in SystemLink 2020R2 it is possible for tag history data to be stored in the incorrect database within the MongoDB instance. **This bug only affects environments where a remote MongoDB server is used.** To determine if you are in this state connect a MongoShell or visual database tool such as [Mongo Compass](https://www.mongodb.com/products/compass) to your Mongo instance and check if the collections `metadata` and `values` are in the default authentication database (typically the `admin` database).
-- Use the `thdbbug` action to correct this. No other migration actions may be paired with this argument. 
+- Use the `thdbbug` action to correct this. Cannot be used simultaneously with other actions. 
 - If you are using a database other than `admin` you can specify this with the `--sourcedb` argument For example
 ```bash
 py systmelinkmigrate.py thdbbug --sourcedb myadmindb
