@@ -17,24 +17,24 @@
 ### Basic usage
 
 ```bash
-py systemlinkmigrate.py --capture --tags
+py systemlinkmigrate.py capture --tags
 ```
 Running `systemlinkmigrate.py` with the above arguments will capture tag and tag history and store this data in `C:\migration`. 
 
 ```bash
-py systemlinkmigrate.py --restore --tags
+py systemlinkmigrate.py restore --tags
 ```
 
 Running `systemlinkmigrate.py` with the above arguments will restore tag and tag history data from the directory `C:\migration`.
 
 ### Capture and Restore
-The `--capture` and `--restore` arguments determine the directionality of the migration. The `--capture` argument is used when migrating data FROM an existing SystemLink server. The `--restore` argument is used when migrating data TO a new SystemLink server. At least one of these arguments must be specified and both arguments cannot be used simultaneously. 
+The `capture` and `restore` actions determine the directionality of the migration. The `capture` action is used when migrating data FROM an existing SystemLink server. The `restore` action is used when migrating data TO a new SystemLink server. Both actions cannot be used simultaneously. 
 
 ### Specifying services to migrate
 To migrate the data associated with a SystemLink service you must specify the service as an argument. Multiple services may be captured or restored by providing multiple arguments; e.g:
 
 ```bash
-py systemlinkmigrate.py --capture --tags --opc
+py systemlinkmigrate.py capture --tags --opc
 ```
 
 #### Supported Services
@@ -70,10 +70,10 @@ These arguments will capture tag and tag history data and store them in the dire
 
 ## Migrating tag history to nitaghistorian database
 Due to a bug introduced in SystemLink 2020R2 it is possible for tag history data to be stored in the incorrect database within the MongoDB instance. **This bug only affects environments where a remote MongoDB server is used.** To determine if you are in this state connect a MongoShell or visual database tool such as [Mongo Compass](https://www.mongodb.com/products/compass) to your Mongo instance and check if the collections `metadata` and `values` are in the default authentication database (typically the `admin` database).
-- Use the `--thdbbug` argument to correct this. No other migration arguments may be paired with this argument. 
+- Use the `thdbbug` action to correct this. Cannot be used simultaneously with other actions. 
 - If you are using a database other than `admin` you can specify this with the `--sourcedb` argument For example
 ```bash
-py systmelinkmigrate.py --thdbbug --sourcedb myadmindb
+py systmelinkmigrate.py thdbbug --sourcedb myadmindb
 ```
 
 

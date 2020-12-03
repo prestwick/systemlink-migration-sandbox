@@ -2,10 +2,12 @@ import pytest
 import os
 import sys
 import shutil
+from unittest.mock import patch
 import slmigrate.constants as constants
 import slmigrate.mongohandler as mongohandler
 import slmigrate.arghandler as arghandler
 import slmigrate.filehandler as filehandler
+import systemlinkmigrate
 from test import test_constants
 
 
@@ -117,5 +119,36 @@ def test_capture_migrate_singlefile():
     filehandler.migrate_singlefile(test, constants.capture_arg)
     assert os.path.isfile(os.path.join(test.migration_dir, "demofile2.txt"))
     shutil.rmtree(test.source_dir)
+    shutil.rmtree(constants.migration_dir)
+
+
+def test_missing_migration_directory():
+    test_args = [test_constants.migration_cmd, constants.restore_arg, "--" + constants.tag.arg, "--" + constants.migration_arg, test_constants.migration_dir]
+    with patch.object(sys, 'argv', test_args):
+        with pytest.raises(SystemExit) as pytest_wrapped_e:
+            systemlinkmigrate.main()
+    assert pytest_wrapped_e.type == SystemExit
+    assert pytest_wrapped_e.value.code != 0
+
+
+def test_missing_service_migration_file():
+    test_args = [test_constants.migration_cmd, constants.restore_arg, "--" + constants.tag.arg, "--" + constants.migration_arg, test_constants.migration_dir]
+    os.mkdir(constants.migration_dir)
+    with patch.object(sys, 'argv', test_args):
+        with pytest.raises(SystemExit) as pytest_wrapped_e:
+            systemlinkmigrate.main()
+    assert pytest_wrapped_e.type == SystemExit
+    assert pytest_wrapped_e.value.code != 0
+    shutil.rmtree(constants.migration_dir)
+
+
+def test_missing_service_migration_dir():
+    test_args = [test_constants.migration_cmd, constants.restore_arg, "--" + constants.fis.arg, "--" + constants.migration_arg, test_constants.migration_dir]
+    os.mkdir(constants.migration_dir)
+    with patch.object(sys, 'argv', test_args):
+        with pytest.raises(SystemExit) as pytest_wrapped_e:
+            systemlinkmigrate.main()
+    assert pytest_wrapped_e.type == SystemExit
+    assert pytest_wrapped_e.value.code != 0
     shutil.rmtree(constants.migration_dir)
 

@@ -1,4 +1,5 @@
 import argparse
+from collections import namedtuple
 from slmigrate import constants
 
 
@@ -30,16 +31,14 @@ def parse_arguments():
 
 
 def determine_migrate_action(arguments):
+    ServiceToMigrate = namedtuple('ServiceToMigrate', ['service', 'action'])
     services_to_migrate = []
-    action = arguments.action
     for arg in vars(arguments):
         if (getattr(arguments, arg) and not (arg == constants.subparser_storage_attr) and not (arg == constants.source_db_arg) and not (arg == constants.migration_arg)):
-            service = getattr(constants, arg)
-            services_to_migrate.append((service, action))
-
+            services_to_migrate.append(ServiceToMigrate(service=getattr(constants, arg), action=arguments.action))
     # Special case for thdbbug, since there are no services given on the command line.
-    if action == constants.thdbbug.arg:
-        services_to_migrate.append((constants.tag, action))
+    if arguments.action == constants.thdbbug.arg:
+        services_to_migrate.append(ServiceToMigrate(service=constants.tag, action=arguments.action))
     return services_to_migrate
 
 
@@ -49,4 +48,3 @@ def determine_migration_dir(arguments):
 
 def determine_source_db(arguments):
     constants.source_db = getattr(arguments, constants.source_db_arg)
-
