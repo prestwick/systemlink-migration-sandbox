@@ -40,18 +40,12 @@ def test_no_action_args():
     assert pytest_wrapped_e.type == SystemExit
 
 
-def test_determine_migrate_action_capture():
-    test_service_tuple = [(constants.tag, constants.capture_arg)]
+@pytest.mark.parametrize("service", constants.services, ids=lambda service: service.arg)
+@pytest.mark.parametrize("action", [constants.capture_arg, constants.restore_arg])
+def test_determine_migrate_action(service, action):
+    test_service_tuple = [(service, constants.capture_arg)]
     parser = arghandler.parse_arguments()
-    arguments = parser.parse_args([constants.capture_arg, "--" + constants.tag.arg])
-    services_to_migrate = arghandler.determine_migrate_action(arguments)
-    assert services_to_migrate == test_service_tuple
-
-
-def test_determine_migrate_action_restore():
-    test_service_tuple = [(constants.opc, constants.restore_arg)]
-    parser = arghandler.parse_arguments()
-    arguments = parser.parse_args([constants.restore_arg, "--" + constants.opc.arg])
+    arguments = parser.parse_args([constants.capture_arg, "--" + service.arg])
     services_to_migrate = arghandler.determine_migrate_action(arguments)
     assert services_to_migrate == test_service_tuple
 

@@ -116,6 +116,8 @@ states_dict = {
 }
 states = SimpleNamespace(**states_dict)
 
+services = [tag, opc, fis, testmonitor, alarmrule, asset, repository, userdata, notification, states]
+
 no_sql_dict = {
     'name': 'NoSqlDatabase'
 
