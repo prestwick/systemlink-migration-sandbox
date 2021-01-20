@@ -14,6 +14,12 @@
 - Depending on your environment you may invoke python with `python`, `python3`, or `py`. Documentation in this repository use `py`. 
 
 ## Running systemlinkmigrate.py
+### Installation
+
+```bash
+pip install -r requirements.txt
+```
+
 ### Basic usage
 
 ```bash
